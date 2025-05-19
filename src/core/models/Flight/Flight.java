@@ -2,8 +2,11 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package core.models;
+package core.models.Flight;
 
+import core.models.Location.Location;
+import core.models.Passenger.Passenger;
+import core.models.Plane.Plane;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
@@ -54,10 +57,10 @@ public class Flight {
         
         this.plane.addFlight(this);
     }
-    
-    public void addPassenger(Passenger passenger) {
+     public void addPassenger(Passenger passenger) {
         this.passengers.add(passenger);
     }
+   
     
     public String getId() {
         return id;

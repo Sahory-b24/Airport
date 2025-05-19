@@ -4,10 +4,10 @@
  */
 package core.views;
 
-import core.models.Location;
-import core.models.Flight;
-import core.models.Passenger;
-import core.models.Plane;
+import core.models.Location.Location;
+import core.models.Flight.Flight;
+import core.models.Passenger.Passenger;
+import core.models.Plane.Plane;
 import com.formdev.flatlaf.FlatDarkLaf;
 import java.awt.Color;
 import java.time.LocalDate;
@@ -77,18 +77,18 @@ public class AirportFrame extends javax.swing.JFrame {
     private void generateHours() {
         for (int i = 0; i < 24; i++) {
             comboBoxHourDepartureDateFlightRegistration.addItem("" + i);
-            MONTH3.addItem("" + i);
-            MONTH4.addItem("" + i);
-            jComboBox6.addItem("" + i);
+            comboBoxHourArrivalLocationFlightRegistration.addItem("" + i);
+            comboBoxHourScaleLocationFlightRegistration.addItem("" + i);
+            comboBoxHourDeayFlight.addItem("" + i);
         }
     }
 
     private void generateMinutes() {
         for (int i = 0; i < 60; i++) {
-            comboBoxMinuteFlightRegistration.addItem("" + i);
-            DAY3.addItem("" + i);
-            DAY4.addItem("" + i);
-            jComboBox8.addItem("" + i);
+            comboBoxMinuteDepartureDateFlightRegistration.addItem("" + i);
+            comboBoxMinuteArrivalFlightRegistration.addItem("" + i);
+            comboBoxMinuteScaleLocationFlightRegistration.addItem("" + i);
+            comboBoxMinuteDelayFlight.addItem("" + i);
         }
     }
 
@@ -101,8 +101,8 @@ public class AirportFrame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        panelRound1 = new core.models.PanelRound();
-        panelRound2 = new core.models.PanelRound();
+        panelRound1 = new core.models.PanelRound.PanelRound();
+        panelRound2 = new core.models.PanelRound.PanelRound();
         jButton13 = new javax.swing.JButton();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel1 = new javax.swing.JPanel();
@@ -178,14 +178,14 @@ public class AirportFrame extends javax.swing.JFrame {
         jLabel32 = new javax.swing.JLabel();
         comboBoxHourDepartureDateFlightRegistration = new javax.swing.JComboBox<>();
         jLabel33 = new javax.swing.JLabel();
-        comboBoxMinuteFlightRegistration = new javax.swing.JComboBox<>();
-        MONTH3 = new javax.swing.JComboBox<>();
+        comboBoxMinuteDepartureDateFlightRegistration = new javax.swing.JComboBox<>();
+        comboBoxHourArrivalLocationFlightRegistration = new javax.swing.JComboBox<>();
         jLabel34 = new javax.swing.JLabel();
-        DAY3 = new javax.swing.JComboBox<>();
+        comboBoxMinuteArrivalFlightRegistration = new javax.swing.JComboBox<>();
         jLabel35 = new javax.swing.JLabel();
-        MONTH4 = new javax.swing.JComboBox<>();
-        DAY4 = new javax.swing.JComboBox<>();
-        jButton11 = new javax.swing.JButton();
+        comboBoxHourScaleLocationFlightRegistration = new javax.swing.JComboBox<>();
+        comboBoxMinuteScaleLocationFlightRegistration = new javax.swing.JComboBox<>();
+        btnCreateFlightRegistration = new javax.swing.JButton();
         jPanel5 = new javax.swing.JPanel();
         jLabel36 = new javax.swing.JLabel();
         txtIDUpdate = new javax.swing.JTextField();
@@ -232,14 +232,14 @@ public class AirportFrame extends javax.swing.JFrame {
         tableShowAllLocations = new javax.swing.JTable();
         btnRefreshShowAllLocation = new javax.swing.JButton();
         jPanel12 = new javax.swing.JPanel();
-        jComboBox6 = new javax.swing.JComboBox<>();
+        comboBoxHourDeayFlight = new javax.swing.JComboBox<>();
         jLabel46 = new javax.swing.JLabel();
         jLabel47 = new javax.swing.JLabel();
-        jComboBox7 = new javax.swing.JComboBox<>();
+        comboBoxIDDelayFlight = new javax.swing.JComboBox<>();
         jLabel48 = new javax.swing.JLabel();
-        jComboBox8 = new javax.swing.JComboBox<>();
-        jButton7 = new javax.swing.JButton();
-        panelRound3 = new core.models.PanelRound();
+        comboBoxMinuteDelayFlight = new javax.swing.JComboBox<>();
+        btnDelayDelayFlight = new javax.swing.JButton();
+        panelRound3 = new core.models.PanelRound.PanelRound();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -629,32 +629,32 @@ public class AirportFrame extends javax.swing.JFrame {
         jLabel33.setFont(new java.awt.Font("Yu Gothic UI", 0, 18)); // NOI18N
         jLabel33.setText("-");
 
-        comboBoxMinuteFlightRegistration.setFont(new java.awt.Font("Yu Gothic UI", 0, 18)); // NOI18N
-        comboBoxMinuteFlightRegistration.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Minute" }));
+        comboBoxMinuteDepartureDateFlightRegistration.setFont(new java.awt.Font("Yu Gothic UI", 0, 18)); // NOI18N
+        comboBoxMinuteDepartureDateFlightRegistration.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Minute" }));
 
-        MONTH3.setFont(new java.awt.Font("Yu Gothic UI", 0, 18)); // NOI18N
-        MONTH3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Hour" }));
+        comboBoxHourArrivalLocationFlightRegistration.setFont(new java.awt.Font("Yu Gothic UI", 0, 18)); // NOI18N
+        comboBoxHourArrivalLocationFlightRegistration.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Hour" }));
 
         jLabel34.setFont(new java.awt.Font("Yu Gothic UI", 0, 18)); // NOI18N
         jLabel34.setText("-");
 
-        DAY3.setFont(new java.awt.Font("Yu Gothic UI", 0, 18)); // NOI18N
-        DAY3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Minute" }));
+        comboBoxMinuteArrivalFlightRegistration.setFont(new java.awt.Font("Yu Gothic UI", 0, 18)); // NOI18N
+        comboBoxMinuteArrivalFlightRegistration.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Minute" }));
 
         jLabel35.setFont(new java.awt.Font("Yu Gothic UI", 0, 18)); // NOI18N
         jLabel35.setText("-");
 
-        MONTH4.setFont(new java.awt.Font("Yu Gothic UI", 0, 18)); // NOI18N
-        MONTH4.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Hour" }));
+        comboBoxHourScaleLocationFlightRegistration.setFont(new java.awt.Font("Yu Gothic UI", 0, 18)); // NOI18N
+        comboBoxHourScaleLocationFlightRegistration.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Hour" }));
 
-        DAY4.setFont(new java.awt.Font("Yu Gothic UI", 0, 18)); // NOI18N
-        DAY4.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Minute" }));
+        comboBoxMinuteScaleLocationFlightRegistration.setFont(new java.awt.Font("Yu Gothic UI", 0, 18)); // NOI18N
+        comboBoxMinuteScaleLocationFlightRegistration.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Minute" }));
 
-        jButton11.setFont(new java.awt.Font("Yu Gothic UI", 0, 18)); // NOI18N
-        jButton11.setText("Create");
-        jButton11.addActionListener(new java.awt.event.ActionListener() {
+        btnCreateFlightRegistration.setFont(new java.awt.Font("Yu Gothic UI", 0, 18)); // NOI18N
+        btnCreateFlightRegistration.setText("Create");
+        btnCreateFlightRegistration.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton11ActionPerformed(evt);
+                btnCreateFlightRegistrationActionPerformed(evt);
             }
         });
 
@@ -687,9 +687,9 @@ public class AirportFrame extends javax.swing.JFrame {
                             .addComponent(comboBoxPlaneFlightRegistration, 0, 130, Short.MAX_VALUE))))
                 .addGap(45, 45, 45)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel27)
                     .addComponent(jLabel28)
-                    .addComponent(jLabel29))
+                    .addComponent(jLabel29)
+                    .addComponent(jLabel27))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel4Layout.createSequentialGroup()
@@ -717,30 +717,30 @@ public class AirportFrame extends javax.swing.JFrame {
                             .addComponent(jLabel33, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel4Layout.createSequentialGroup()
                                 .addGap(20, 20, 20)
-                                .addComponent(comboBoxMinuteFlightRegistration, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(comboBoxMinuteDepartureDateFlightRegistration, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(30, 30, 30))
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel4Layout.createSequentialGroup()
-                                .addComponent(MONTH3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(comboBoxHourArrivalLocationFlightRegistration, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(14, 14, 14)
                                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel34, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGroup(jPanel4Layout.createSequentialGroup()
                                         .addGap(20, 20, 20)
-                                        .addComponent(DAY3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                        .addComponent(comboBoxMinuteArrivalFlightRegistration, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                             .addGroup(jPanel4Layout.createSequentialGroup()
-                                .addComponent(MONTH4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(comboBoxHourScaleLocationFlightRegistration, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(14, 14, 14)
                                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel35, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGroup(jPanel4Layout.createSequentialGroup()
                                         .addGap(20, 20, 20)
-                                        .addComponent(DAY4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                        .addComponent(comboBoxMinuteScaleLocationFlightRegistration, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton11, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnCreateFlightRegistration, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(530, 530, 530))
         );
         jPanel4Layout.setVerticalGroup(
@@ -761,7 +761,7 @@ public class AirportFrame extends javax.swing.JFrame {
                     .addComponent(comboBoxHourDepartureDateFlightRegistration, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel32)
                     .addComponent(jLabel33)
-                    .addComponent(comboBoxMinuteFlightRegistration, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(comboBoxMinuteDepartureDateFlightRegistration, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -779,20 +779,21 @@ public class AirportFrame extends javax.swing.JFrame {
                                 .addComponent(jLabel25)
                                 .addComponent(comboBoxArrivalLocationFlightRegistration, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(jLabel28))
-                            .addComponent(MONTH3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(comboBoxHourArrivalLocationFlightRegistration, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel34)
-                            .addComponent(DAY3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(comboBoxMinuteArrivalFlightRegistration, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(34, 34, 34)
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(MONTH4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(comboBoxHourScaleLocationFlightRegistration, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel27))
                             .addComponent(jLabel35)
-                            .addComponent(DAY4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(comboBoxMinuteScaleLocationFlightRegistration, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                 .addComponent(jLabel26)
-                                .addComponent(comboBoxScaleLocationFlightRegistration, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jLabel27)))))
+                                .addComponent(comboBoxScaleLocationFlightRegistration, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 134, Short.MAX_VALUE)
-                .addComponent(jButton11, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnCreateFlightRegistration, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(50, 50, 50))
         );
 
@@ -1308,8 +1309,8 @@ public class AirportFrame extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("Show all locations", jPanel11);
 
-        jComboBox6.setFont(new java.awt.Font("Yu Gothic UI", 0, 18)); // NOI18N
-        jComboBox6.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Hour" }));
+        comboBoxHourDeayFlight.setFont(new java.awt.Font("Yu Gothic UI", 0, 18)); // NOI18N
+        comboBoxHourDeayFlight.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Hour" }));
 
         jLabel46.setFont(new java.awt.Font("Yu Gothic UI", 0, 18)); // NOI18N
         jLabel46.setText("Hours:");
@@ -1317,20 +1318,20 @@ public class AirportFrame extends javax.swing.JFrame {
         jLabel47.setFont(new java.awt.Font("Yu Gothic UI", 0, 18)); // NOI18N
         jLabel47.setText("ID:");
 
-        jComboBox7.setFont(new java.awt.Font("Yu Gothic UI", 0, 18)); // NOI18N
-        jComboBox7.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ID" }));
+        comboBoxIDDelayFlight.setFont(new java.awt.Font("Yu Gothic UI", 0, 18)); // NOI18N
+        comboBoxIDDelayFlight.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ID" }));
 
         jLabel48.setFont(new java.awt.Font("Yu Gothic UI", 0, 18)); // NOI18N
         jLabel48.setText("Minutes:");
 
-        jComboBox8.setFont(new java.awt.Font("Yu Gothic UI", 0, 18)); // NOI18N
-        jComboBox8.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Minute" }));
+        comboBoxMinuteDelayFlight.setFont(new java.awt.Font("Yu Gothic UI", 0, 18)); // NOI18N
+        comboBoxMinuteDelayFlight.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Minute" }));
 
-        jButton7.setFont(new java.awt.Font("Yu Gothic UI", 0, 18)); // NOI18N
-        jButton7.setText("Delay");
-        jButton7.addActionListener(new java.awt.event.ActionListener() {
+        btnDelayDelayFlight.setFont(new java.awt.Font("Yu Gothic UI", 0, 18)); // NOI18N
+        btnDelayDelayFlight.setText("Delay");
+        btnDelayDelayFlight.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton7ActionPerformed(evt);
+                btnDelayDelayFlightActionPerformed(evt);
             }
         });
 
@@ -1344,19 +1345,19 @@ public class AirportFrame extends javax.swing.JFrame {
                     .addGroup(jPanel12Layout.createSequentialGroup()
                         .addComponent(jLabel48)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jComboBox8, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(comboBoxMinuteDelayFlight, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel12Layout.createSequentialGroup()
                         .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel47)
                             .addComponent(jLabel46))
                         .addGap(79, 79, 79)
                         .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jComboBox6, 0, 105, Short.MAX_VALUE)
-                            .addComponent(jComboBox7, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                            .addComponent(comboBoxHourDeayFlight, 0, 105, Short.MAX_VALUE)
+                            .addComponent(comboBoxIDDelayFlight, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addGap(820, 820, 820))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel12Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton7)
+                .addComponent(btnDelayDelayFlight)
                 .addGap(531, 531, 531))
         );
         jPanel12Layout.setVerticalGroup(
@@ -1365,17 +1366,17 @@ public class AirportFrame extends javax.swing.JFrame {
                 .addGap(26, 26, 26)
                 .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel47)
-                    .addComponent(jComboBox7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(comboBoxIDDelayFlight, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(32, 32, 32)
                 .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel46)
-                    .addComponent(jComboBox6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(comboBoxHourDeayFlight, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(32, 32, 32)
                 .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel48)
-                    .addComponent(jComboBox8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(comboBoxMinuteDelayFlight, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 307, Short.MAX_VALUE)
-                .addComponent(jButton7)
+                .addComponent(btnDelayDelayFlight)
                 .addGap(33, 33, 33))
         );
 
@@ -1496,7 +1497,7 @@ public class AirportFrame extends javax.swing.JFrame {
         this.comboBoxScaleLocationFlightRegistration.addItem(id);
     }//GEN-LAST:event_btnCreateLocationRegistrationActionPerformed
 
-    private void jButton11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton11ActionPerformed
+    private void btnCreateFlightRegistrationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreateFlightRegistrationActionPerformed
         // TODO add your handling code here:
         String id = txtIDFlightRegistration.getText();
         String planeId = comboBoxPlaneFlightRegistration.getItemAt(comboBoxPlaneFlightRegistration.getSelectedIndex());
@@ -1507,11 +1508,11 @@ public class AirportFrame extends javax.swing.JFrame {
         int month = Integer.parseInt(comboBoxMonthFlightRegistration.getItemAt(comboBoxMonthFlightRegistration.getSelectedIndex()));
         int day = Integer.parseInt(comboBoxDayFlightRegistration.getItemAt(comboBoxDayFlightRegistration.getSelectedIndex()));
         int hour = Integer.parseInt(comboBoxHourDepartureDateFlightRegistration.getItemAt(comboBoxHourDepartureDateFlightRegistration.getSelectedIndex()));
-        int minutes = Integer.parseInt(comboBoxMinuteFlightRegistration.getItemAt(comboBoxMinuteFlightRegistration.getSelectedIndex()));
-        int hoursDurationsArrival = Integer.parseInt(MONTH3.getItemAt(MONTH3.getSelectedIndex()));
-        int minutesDurationsArrival = Integer.parseInt(DAY3.getItemAt(DAY3.getSelectedIndex()));
-        int hoursDurationsScale = Integer.parseInt(MONTH4.getItemAt(MONTH4.getSelectedIndex()));
-        int minutesDurationsScale = Integer.parseInt(DAY4.getItemAt(DAY4.getSelectedIndex()));
+        int minutes = Integer.parseInt(comboBoxMinuteDepartureDateFlightRegistration.getItemAt(comboBoxMinuteDepartureDateFlightRegistration.getSelectedIndex()));
+        int hoursDurationsArrival = Integer.parseInt(comboBoxHourArrivalLocationFlightRegistration.getItemAt(comboBoxHourArrivalLocationFlightRegistration.getSelectedIndex()));
+        int minutesDurationsArrival = Integer.parseInt(comboBoxMinuteArrivalFlightRegistration.getItemAt(comboBoxMinuteArrivalFlightRegistration.getSelectedIndex()));
+        int hoursDurationsScale = Integer.parseInt(comboBoxHourScaleLocationFlightRegistration.getItemAt(comboBoxHourScaleLocationFlightRegistration.getSelectedIndex()));
+        int minutesDurationsScale = Integer.parseInt(comboBoxMinuteScaleLocationFlightRegistration.getItemAt(comboBoxMinuteScaleLocationFlightRegistration.getSelectedIndex()));
 
         LocalDateTime departureDate = LocalDateTime.of(year, month, day, hour, minutes);
 
@@ -1536,15 +1537,15 @@ public class AirportFrame extends javax.swing.JFrame {
                 scale = location;
             }
         }
-
+         
         if (scale == null) {
-            this.flights.add(new Flight(id, plane, departure, arrival, departureDate, hoursDurationsArrival, minutesDurationsArrival));
+            this.flights.add(new Flight(id, plane, departure, arrival, departureDate, hoursDurationsArrival, minutesDurationsArrival) {} );
         } else {
-            this.flights.add(new Flight(id, plane, departure, scale, arrival, departureDate, hoursDurationsArrival, minutesDurationsArrival, hoursDurationsScale, minutesDurationsScale));
+            this.flights.add(new Flight(id, plane, departure, scale, arrival, departureDate, hoursDurationsArrival, minutesDurationsArrival, hoursDurationsScale, minutesDurationsScale) {} );
         }
 
         this.comboBoxFlightAdd.addItem(id);
-    }//GEN-LAST:event_jButton11ActionPerformed
+    }//GEN-LAST:event_btnCreateFlightRegistrationActionPerformed
 
     private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
         // TODO add your handling code here:
@@ -1599,11 +1600,11 @@ public class AirportFrame extends javax.swing.JFrame {
         flight.addPassenger(passenger);
     }//GEN-LAST:event_btnAddActionPerformed
 
-    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
+    private void btnDelayDelayFlightActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDelayDelayFlightActionPerformed
         // TODO add your handling code here:
-        String flightId = jComboBox7.getItemAt(jComboBox7.getSelectedIndex());
-        int hours = Integer.parseInt(jComboBox6.getItemAt(jComboBox6.getSelectedIndex()));
-        int minutes = Integer.parseInt(jComboBox8.getItemAt(jComboBox8.getSelectedIndex()));
+        String flightId = comboBoxIDDelayFlight.getItemAt(comboBoxIDDelayFlight.getSelectedIndex());
+        int hours = Integer.parseInt(comboBoxHourDeayFlight.getItemAt(comboBoxHourDeayFlight.getSelectedIndex()));
+        int minutes = Integer.parseInt(comboBoxMinuteDelayFlight.getItemAt(comboBoxMinuteDelayFlight.getSelectedIndex()));
 
         Flight flight = null;
         for (Flight f : this.flights) {
@@ -1613,7 +1614,7 @@ public class AirportFrame extends javax.swing.JFrame {
         }
 
         flight.delay(hours, minutes);
-    }//GEN-LAST:event_jButton7ActionPerformed
+    }//GEN-LAST:event_btnDelayDelayFlightActionPerformed
 
     private void btnRefreshShowMyFlightsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRefreshShowMyFlightsActionPerformed
         // TODO add your handling code here:
@@ -1707,14 +1708,12 @@ public class AirportFrame extends javax.swing.JFrame {
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JComboBox<String> DAY3;
-    private javax.swing.JComboBox<String> DAY4;
-    private javax.swing.JComboBox<String> MONTH3;
-    private javax.swing.JComboBox<String> MONTH4;
     private javax.swing.JRadioButton administrator;
     private javax.swing.JButton btnAdd;
     private javax.swing.JButton btnCreateAirplaneRegistration;
+    private javax.swing.JButton btnCreateFlightRegistration;
     private javax.swing.JButton btnCreateLocationRegistration;
+    private javax.swing.JButton btnDelayDelayFlight;
     private javax.swing.JButton btnRefreshShowAllFlights;
     private javax.swing.JButton btnRefreshShowAllLocation;
     private javax.swing.JButton btnRefreshShowAllPassengers;
@@ -1728,19 +1727,21 @@ public class AirportFrame extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> comboBoxDayUpdate;
     private javax.swing.JComboBox<String> comboBoxDepartureLocationFlightRegistration;
     private javax.swing.JComboBox<String> comboBoxFlightAdd;
+    private javax.swing.JComboBox<String> comboBoxHourArrivalLocationFlightRegistration;
+    private javax.swing.JComboBox<String> comboBoxHourDeayFlight;
     private javax.swing.JComboBox<String> comboBoxHourDepartureDateFlightRegistration;
-    private javax.swing.JComboBox<String> comboBoxMinuteFlightRegistration;
+    private javax.swing.JComboBox<String> comboBoxHourScaleLocationFlightRegistration;
+    private javax.swing.JComboBox<String> comboBoxIDDelayFlight;
+    private javax.swing.JComboBox<String> comboBoxMinuteArrivalFlightRegistration;
+    private javax.swing.JComboBox<String> comboBoxMinuteDelayFlight;
+    private javax.swing.JComboBox<String> comboBoxMinuteDepartureDateFlightRegistration;
+    private javax.swing.JComboBox<String> comboBoxMinuteScaleLocationFlightRegistration;
     private javax.swing.JComboBox<String> comboBoxMonthFlightRegistration;
     private javax.swing.JComboBox<String> comboBoxMonthRegistration;
     private javax.swing.JComboBox<String> comboBoxMonthUpdate;
     private javax.swing.JComboBox<String> comboBoxPlaneFlightRegistration;
     private javax.swing.JComboBox<String> comboBoxScaleLocationFlightRegistration;
-    private javax.swing.JButton jButton11;
     private javax.swing.JButton jButton13;
-    private javax.swing.JButton jButton7;
-    private javax.swing.JComboBox<String> jComboBox6;
-    private javax.swing.JComboBox<String> jComboBox7;
-    private javax.swing.JComboBox<String> jComboBox8;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -1808,9 +1809,9 @@ public class AirportFrame extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JTabbedPane jTabbedPane1;
-    private core.models.PanelRound panelRound1;
-    private core.models.PanelRound panelRound2;
-    private core.models.PanelRound panelRound3;
+    private core.models.PanelRound.PanelRound panelRound1;
+    private core.models.PanelRound.PanelRound panelRound2;
+    private core.models.PanelRound.PanelRound panelRound3;
     private javax.swing.JTable tableShowAllFlights;
     private javax.swing.JTable tableShowAllLocations;
     private javax.swing.JTable tableShowAllPassengers;

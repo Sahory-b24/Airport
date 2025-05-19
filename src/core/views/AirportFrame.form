@@ -34,7 +34,7 @@
     </DimensionLayout>
   </Layout>
   <SubComponents>
-    <Container class="core.models.PanelRound" name="panelRound1">
+    <Container class="core.models.PanelRound.PanelRound" name="panelRound1">
       <Properties>
         <Property name="radius" type="int" value="40"/>
       </Properties>
@@ -43,7 +43,7 @@
         <Property name="useNullLayout" type="boolean" value="false"/>
       </Layout>
       <SubComponents>
-        <Container class="core.models.PanelRound" name="panelRound2">
+        <Container class="core.models.PanelRound.PanelRound" name="panelRound2">
           <Events>
             <EventHandler event="mouseDragged" listener="java.awt.event.MouseMotionListener" parameters="java.awt.event.MouseEvent" handler="panelRound2MouseDragged"/>
             <EventHandler event="mousePressed" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="panelRound2MousePressed"/>
@@ -848,9 +848,9 @@
                           </Group>
                           <EmptySpace min="-2" pref="45" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="1" attributes="0">
-                              <Component id="jLabel27" min="-2" max="-2" attributes="0"/>
                               <Component id="jLabel28" min="-2" max="-2" attributes="0"/>
                               <Component id="jLabel29" min="-2" max="-2" attributes="0"/>
+                              <Component id="jLabel27" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
@@ -885,7 +885,7 @@
                                       <Component id="jLabel33" alignment="0" min="-2" pref="30" max="-2" attributes="0"/>
                                       <Group type="102" alignment="0" attributes="0">
                                           <EmptySpace min="20" pref="20" max="-2" attributes="0"/>
-                                          <Component id="comboBoxMinuteFlightRegistration" min="-2" max="-2" attributes="0"/>
+                                          <Component id="comboBoxMinuteDepartureDateFlightRegistration" min="-2" max="-2" attributes="0"/>
                                       </Group>
                                   </Group>
                                   <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
@@ -893,24 +893,24 @@
                               <Group type="102" attributes="0">
                                   <Group type="103" groupAlignment="0" attributes="0">
                                       <Group type="102" attributes="0">
-                                          <Component id="MONTH3" min="-2" max="-2" attributes="0"/>
+                                          <Component id="comboBoxHourArrivalLocationFlightRegistration" min="-2" max="-2" attributes="0"/>
                                           <EmptySpace min="14" pref="14" max="-2" attributes="0"/>
                                           <Group type="103" groupAlignment="0" attributes="0">
                                               <Component id="jLabel34" alignment="0" min="-2" pref="30" max="-2" attributes="0"/>
                                               <Group type="102" alignment="0" attributes="0">
                                                   <EmptySpace min="20" pref="20" max="-2" attributes="0"/>
-                                                  <Component id="DAY3" min="-2" max="-2" attributes="0"/>
+                                                  <Component id="comboBoxMinuteArrivalFlightRegistration" min="-2" max="-2" attributes="0"/>
                                               </Group>
                                           </Group>
                                       </Group>
                                       <Group type="102" attributes="0">
-                                          <Component id="MONTH4" min="-2" max="-2" attributes="0"/>
+                                          <Component id="comboBoxHourScaleLocationFlightRegistration" min="-2" max="-2" attributes="0"/>
                                           <EmptySpace min="14" pref="14" max="-2" attributes="0"/>
                                           <Group type="103" groupAlignment="0" attributes="0">
                                               <Component id="jLabel35" alignment="0" min="-2" pref="30" max="-2" attributes="0"/>
                                               <Group type="102" alignment="0" attributes="0">
                                                   <EmptySpace min="20" pref="20" max="-2" attributes="0"/>
-                                                  <Component id="DAY4" min="-2" max="-2" attributes="0"/>
+                                                  <Component id="comboBoxMinuteScaleLocationFlightRegistration" min="-2" max="-2" attributes="0"/>
                                               </Group>
                                           </Group>
                                       </Group>
@@ -921,7 +921,7 @@
                       </Group>
                       <Group type="102" alignment="1" attributes="0">
                           <EmptySpace max="32767" attributes="0"/>
-                          <Component id="jButton11" min="-2" pref="120" max="-2" attributes="0"/>
+                          <Component id="btnCreateFlightRegistration" min="-2" pref="120" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="530" max="-2" attributes="0"/>
                       </Group>
                   </Group>
@@ -947,7 +947,7 @@
                               <Component id="comboBoxHourDepartureDateFlightRegistration" alignment="0" min="-2" max="-2" attributes="0"/>
                               <Component id="jLabel32" alignment="0" min="-2" max="-2" attributes="0"/>
                               <Component id="jLabel33" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="comboBoxMinuteFlightRegistration" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="comboBoxMinuteDepartureDateFlightRegistration" alignment="0" min="-2" max="-2" attributes="0"/>
                               <Group type="102" attributes="0">
                                   <Group type="103" groupAlignment="0" attributes="0">
                                       <Group type="103" groupAlignment="3" attributes="0">
@@ -968,25 +968,27 @@
                                           <Component id="comboBoxArrivalLocationFlightRegistration" alignment="3" min="-2" max="-2" attributes="0"/>
                                           <Component id="jLabel28" alignment="3" min="-2" max="-2" attributes="0"/>
                                       </Group>
-                                      <Component id="MONTH3" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      <Component id="comboBoxHourArrivalLocationFlightRegistration" alignment="0" min="-2" max="-2" attributes="0"/>
                                       <Component id="jLabel34" alignment="0" min="-2" max="-2" attributes="0"/>
-                                      <Component id="DAY3" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      <Component id="comboBoxMinuteArrivalFlightRegistration" alignment="0" min="-2" max="-2" attributes="0"/>
                                   </Group>
                                   <EmptySpace min="-2" pref="34" max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="MONTH4" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      <Group type="103" alignment="0" groupAlignment="3" attributes="0">
+                                          <Component id="comboBoxHourScaleLocationFlightRegistration" alignment="3" min="-2" max="-2" attributes="0"/>
+                                          <Component id="jLabel27" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      </Group>
                                       <Component id="jLabel35" alignment="0" min="-2" max="-2" attributes="0"/>
-                                      <Component id="DAY4" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      <Component id="comboBoxMinuteScaleLocationFlightRegistration" alignment="0" min="-2" max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="3" attributes="0">
                                           <Component id="jLabel26" alignment="3" min="-2" max="-2" attributes="0"/>
                                           <Component id="comboBoxScaleLocationFlightRegistration" alignment="3" min="-2" max="-2" attributes="0"/>
-                                          <Component id="jLabel27" alignment="3" min="-2" max="-2" attributes="0"/>
                                       </Group>
                                   </Group>
                               </Group>
                           </Group>
                           <EmptySpace pref="134" max="32767" attributes="0"/>
-                          <Component id="jButton11" min="-2" pref="40" max="-2" attributes="0"/>
+                          <Component id="btnCreateFlightRegistration" min="-2" pref="40" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="50" max="-2" attributes="0"/>
                       </Group>
                   </Group>
@@ -1211,7 +1213,7 @@
                     <Property name="text" type="java.lang.String" value="-"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JComboBox" name="comboBoxMinuteFlightRegistration">
+                <Component class="javax.swing.JComboBox" name="comboBoxMinuteDepartureDateFlightRegistration">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Yu Gothic UI" size="18" style="0"/>
@@ -1226,7 +1228,7 @@
                     <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
                   </AuxValues>
                 </Component>
-                <Component class="javax.swing.JComboBox" name="MONTH3">
+                <Component class="javax.swing.JComboBox" name="comboBoxHourArrivalLocationFlightRegistration">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Yu Gothic UI" size="18" style="0"/>
@@ -1249,7 +1251,7 @@
                     <Property name="text" type="java.lang.String" value="-"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JComboBox" name="DAY3">
+                <Component class="javax.swing.JComboBox" name="comboBoxMinuteArrivalFlightRegistration">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Yu Gothic UI" size="18" style="0"/>
@@ -1272,7 +1274,7 @@
                     <Property name="text" type="java.lang.String" value="-"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JComboBox" name="MONTH4">
+                <Component class="javax.swing.JComboBox" name="comboBoxHourScaleLocationFlightRegistration">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Yu Gothic UI" size="18" style="0"/>
@@ -1287,7 +1289,7 @@
                     <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
                   </AuxValues>
                 </Component>
-                <Component class="javax.swing.JComboBox" name="DAY4">
+                <Component class="javax.swing.JComboBox" name="comboBoxMinuteScaleLocationFlightRegistration">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Yu Gothic UI" size="18" style="0"/>
@@ -1302,7 +1304,7 @@
                     <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
                   </AuxValues>
                 </Component>
-                <Component class="javax.swing.JButton" name="jButton11">
+                <Component class="javax.swing.JButton" name="btnCreateFlightRegistration">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Yu Gothic UI" size="18" style="0"/>
@@ -1310,7 +1312,7 @@
                     <Property name="text" type="java.lang.String" value="Create"/>
                   </Properties>
                   <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton11ActionPerformed"/>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnCreateFlightRegistrationActionPerformed"/>
                   </Events>
                 </Component>
               </SubComponents>
@@ -2103,7 +2105,7 @@
                               <Group type="102" attributes="0">
                                   <Component id="jLabel48" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace max="32767" attributes="0"/>
-                                  <Component id="jComboBox8" min="-2" pref="109" max="-2" attributes="0"/>
+                                  <Component id="comboBoxMinuteDelayFlight" min="-2" pref="109" max="-2" attributes="0"/>
                               </Group>
                               <Group type="102" attributes="0">
                                   <Group type="103" groupAlignment="0" attributes="0">
@@ -2112,8 +2114,8 @@
                                   </Group>
                                   <EmptySpace min="-2" pref="79" max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="jComboBox6" pref="105" max="32767" attributes="0"/>
-                                      <Component id="jComboBox7" max="32767" attributes="0"/>
+                                      <Component id="comboBoxHourDeayFlight" pref="105" max="32767" attributes="0"/>
+                                      <Component id="comboBoxIDDelayFlight" max="32767" attributes="0"/>
                                   </Group>
                               </Group>
                           </Group>
@@ -2121,7 +2123,7 @@
                       </Group>
                       <Group type="102" alignment="1" attributes="0">
                           <EmptySpace max="32767" attributes="0"/>
-                          <Component id="jButton7" min="-2" max="-2" attributes="0"/>
+                          <Component id="btnDelayDelayFlight" min="-2" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="531" max="-2" attributes="0"/>
                       </Group>
                   </Group>
@@ -2132,27 +2134,27 @@
                           <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="jLabel47" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="jComboBox7" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="comboBoxIDDelayFlight" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace min="-2" pref="32" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="jLabel46" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="jComboBox6" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="comboBoxHourDeayFlight" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace min="-2" pref="32" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="jLabel48" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="jComboBox8" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="comboBoxMinuteDelayFlight" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace pref="307" max="32767" attributes="0"/>
-                          <Component id="jButton7" min="-2" max="-2" attributes="0"/>
+                          <Component id="btnDelayDelayFlight" min="-2" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="33" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
               </Layout>
               <SubComponents>
-                <Component class="javax.swing.JComboBox" name="jComboBox6">
+                <Component class="javax.swing.JComboBox" name="comboBoxHourDeayFlight">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Yu Gothic UI" size="18" style="0"/>
@@ -2183,7 +2185,7 @@
                     <Property name="text" type="java.lang.String" value="ID:"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JComboBox" name="jComboBox7">
+                <Component class="javax.swing.JComboBox" name="comboBoxIDDelayFlight">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Yu Gothic UI" size="18" style="0"/>
@@ -2206,7 +2208,7 @@
                     <Property name="text" type="java.lang.String" value="Minutes:"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JComboBox" name="jComboBox8">
+                <Component class="javax.swing.JComboBox" name="comboBoxMinuteDelayFlight">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Yu Gothic UI" size="18" style="0"/>
@@ -2221,7 +2223,7 @@
                     <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
                   </AuxValues>
                 </Component>
-                <Component class="javax.swing.JButton" name="jButton7">
+                <Component class="javax.swing.JButton" name="btnDelayDelayFlight">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Yu Gothic UI" size="18" style="0"/>
@@ -2229,14 +2231,14 @@
                     <Property name="text" type="java.lang.String" value="Delay"/>
                   </Properties>
                   <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton7ActionPerformed"/>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnDelayDelayFlightActionPerformed"/>
                   </Events>
                 </Component>
               </SubComponents>
             </Container>
           </SubComponents>
         </Container>
-        <Container class="core.models.PanelRound" name="panelRound3">
+        <Container class="core.models.PanelRound.PanelRound" name="panelRound3">
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
               <AbsoluteConstraints x="-2" y="660" width="1150" height="-1"/>
