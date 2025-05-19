@@ -8,7 +8,7 @@ package core.controllers.utils;
  *
  * @author Sahory Blanco
  */
-public class Status {
+public abstract class Status {
     // Successful response
     public static final int OK = 200;
     public static final int CREATED = 201;

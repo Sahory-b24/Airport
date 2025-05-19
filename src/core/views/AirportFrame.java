@@ -9,10 +9,15 @@ import core.models.Flight;
 import core.models.Passenger;
 import core.models.Plane;
 import com.formdev.flatlaf.FlatDarkLaf;
+import core.controllers.LocationController;
+import core.controllers.PassengerController;
+import core.controllers.utils.Response;
 import java.awt.Color;
+import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import javax.swing.table.DefaultTableModel;
 
@@ -1452,20 +1457,50 @@ public class AirportFrame extends javax.swing.JFrame {
 
     private void btnRegisterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegisterActionPerformed
         // TODO add your handling code here:
-        long id = Long.parseLong(txtIDRegistration.getText());
-        String firstname = txtFirstNameRegistration.getText();
-        String lastname = txtLastNameRegistration.getText();
-        int year = Integer.parseInt(txtBirthdateRegistration.getText());
-        int month = Integer.parseInt(comboBoxMonthRegistration.getItemAt(comboBoxMonthRegistration.getSelectedIndex()));
-        int day = Integer.parseInt(comboBoxDayRegistration.getItemAt(comboBoxDayRegistration.getSelectedIndex()));
-        int phoneCode = Integer.parseInt(txtPhoneCodeRegistration.getText());
-        long phone = Long.parseLong(txtPhoneRegistration.getText());
-        String country = txtCountryRegistration.getText();
+        try {
+            // Obtener y validar campos
+            long id = Long.parseLong(txtIDRegistration.getText().trim());
+            String firstname = txtFirstNameRegistration.getText().trim();
+            String lastname = txtLastNameRegistration.getText().trim();
+            int year = Integer.parseInt(txtBirthdateRegistration.getText().trim());
+            int month = Integer.parseInt(comboBoxMonthRegistration.getSelectedItem().toString());
+            int day = Integer.parseInt(comboBoxDayRegistration.getSelectedItem().toString());
+            int phoneCode = Integer.parseInt(txtPhoneCodeRegistration.getText().trim());
+            long phone = Long.parseLong(txtPhoneRegistration.getText().trim());
+            String country = txtCountryRegistration.getText().trim();
 
-        LocalDate birthDate = LocalDate.of(year, month, day);
+            // Construir fecha
+            LocalDate birthDate = LocalDate.of(year, month, day);
 
-        this.passengers.add(new Passenger(id, firstname, lastname, birthDate, phoneCode, phone, country));
-        this.userSelect.addItem("" + id);
+            // Llamar al controlador
+            Response response = PassengerController.createPassenger(id, firstname, lastname, birthDate, phoneCode, phone, country);
+
+            // Mostrar mensajes según status
+            if (response.getStatus() >= 500){
+                JOptionPane.showMessageDialog(this, response.getMessage(), "Error " + response.getStatus(), JOptionPane.ERROR_MESSAGE);
+            } else if (response.getStatus() >= 400) {
+                JOptionPane.showMessageDialog(this, response.getMessage(), "Error " + response.getStatus(), JOptionPane.WARNING_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(this, response.getMessage(), "Success " + response.getStatus(), JOptionPane.INFORMATION_MESSAGE);
+                this.userSelect.addItem("" + id);
+                txtIDRegistration.setText("");
+                txtFirstNameRegistration.setText("");
+                txtLastNameRegistration.setText("");
+                txtBirthdateRegistration.setText(""); // si tienes un campo año
+                comboBoxMonthRegistration.setSelectedIndex(0); // primer mes
+                comboBoxDayRegistration.setSelectedIndex(0);   // primer día
+                txtPhoneCodeRegistration.setText("");
+                txtPhoneRegistration.setText("");
+                txtCountryRegistration.setText("");
+            }
+
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(this,"All numeric fields must be valid numbers or not empty", "Error 400", JOptionPane.WARNING_MESSAGE);
+        } catch (DateTimeException ex) {
+            JOptionPane.showMessageDialog(this, "Invalid date selected", "Error 400", JOptionPane.WARNING_MESSAGE);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, "Unexpected error: " + ex.getMessage(), "Error 500", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_btnRegisterActionPerformed
 
     private void btnCreateAirplaneRegistrationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreateAirplaneRegistrationActionPerformed
@@ -1483,18 +1518,39 @@ public class AirportFrame extends javax.swing.JFrame {
 
     private void btnCreateLocationRegistrationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreateLocationRegistrationActionPerformed
         // TODO add your handling code here:
-        String id = txtAirportIDLocationRegistration.getText();
-        String name = txtAirportNameLocationRegistration.getText();
-        String city = txtAirportCityLocationRegistration.getText();
-        String country = txtAirportCountryLocationRegistration.getText();
-        double latitude = Double.parseDouble(txtAirportLatitudeLocationRegistration.getText());
-        double longitude = Double.parseDouble(txtAirportLongitudeLocationRegistration.getText());
+        try {
+            String id = txtAirportIDLocationRegistration.getText().trim();
+            String name = txtAirportNameLocationRegistration.getText().trim();
+            String city = txtAirportCityLocationRegistration.getText().trim();
+            String country = txtAirportCountryLocationRegistration.getText().trim();
+            double latitude = Double.parseDouble(txtAirportLatitudeLocationRegistration.getText().trim());
+            double longitude = Double.parseDouble(txtAirportLongitudeLocationRegistration.getText().trim());
 
-        this.locations.add(new Location(id, name, city, country, latitude, longitude));
+            Response response = LocationController.createLocation(id, name, city, country, latitude, longitude);
 
-        this.comboBoxDepartureLocationFlightRegistration.addItem(id);
-        this.comboBoxArrivalLocationFlightRegistration.addItem(id);
-        this.comboBoxScaleLocationFlightRegistration.addItem(id);
+            if (response.getStatus() >= 500) {
+                JOptionPane.showMessageDialog(this, response.getMessage(), "Error " + response.getStatus(), JOptionPane.ERROR_MESSAGE);
+            } else if (response.getStatus() >= 400) {
+                JOptionPane.showMessageDialog(this, response.getMessage(), "Error " + response.getStatus(), JOptionPane.WARNING_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(this, response.getMessage(), "Success " + response.getStatus(), JOptionPane.INFORMATION_MESSAGE);
+
+                // Solo agregas a los comboBoxes si fue exitoso
+                comboBoxDepartureLocationFlightRegistration.addItem(id);
+                comboBoxArrivalLocationFlightRegistration.addItem(id);
+                comboBoxScaleLocationFlightRegistration.addItem(id);
+
+                txtAirportIDLocationRegistration.setText("");
+                txtAirportNameLocationRegistration.setText("");
+                txtAirportCityLocationRegistration.setText("");
+                txtAirportCountryLocationRegistration.setText("");
+                txtAirportLatitudeLocationRegistration.setText("");
+                txtAirportLongitudeLocationRegistration.setText("");
+            }
+
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Latitude and longitude must be valid numbers", "Error 400", JOptionPane.WARNING_MESSAGE);
+        }
     }//GEN-LAST:event_btnCreateLocationRegistrationActionPerformed
 
     private void btnCreateFlightRegistrationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreateFlightRegistrationActionPerformed
