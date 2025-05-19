@@ -2,11 +2,8 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package core.models.Flight;
+package core.models;
 
-import core.models.Location.Location;
-import core.models.Passenger.Passenger;
-import core.models.Plane.Plane;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
