@@ -8,7 +8,6 @@ import core.models.Location;
 import core.models.Flight;
 import core.models.Passenger;
 import core.models.Plane;
-import com.formdev.flatlaf.FlatDarkLaf;
 import core.controllers.LocationController;
 import core.controllers.PassengerController;
 import core.controllers.utils.Response;
@@ -18,7 +17,6 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
-import javax.swing.UIManager;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -106,8 +104,8 @@ public class AirportFrame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        panelRound1 = new core.models.PanelRound();
-        panelRound2 = new core.models.PanelRound();
+        panelRound1 = new core.views.PanelRound();
+        panelRound2 = new core.views.PanelRound();
         jButton13 = new javax.swing.JButton();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel1 = new javax.swing.JPanel();
@@ -244,7 +242,7 @@ public class AirportFrame extends javax.swing.JFrame {
         jLabel48 = new javax.swing.JLabel();
         comboBoxMinuteDelayFlight = new javax.swing.JComboBox<>();
         btnDelayDelayFlight = new javax.swing.JButton();
-        panelRound3 = new core.models.PanelRound();
+        panelRound3 = new core.views.PanelRound();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -1865,9 +1863,9 @@ public class AirportFrame extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JTabbedPane jTabbedPane1;
-    private core.models.PanelRound panelRound1;
-    private core.models.PanelRound panelRound2;
-    private core.models.PanelRound panelRound3;
+    private core.views.PanelRound panelRound1;
+    private core.views.PanelRound panelRound2;
+    private core.views.PanelRound panelRound3;
     private javax.swing.JTable tableShowAllFlights;
     private javax.swing.JTable tableShowAllLocations;
     private javax.swing.JTable tableShowAllPassengers;

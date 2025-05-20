@@ -14,7 +14,7 @@ import java.util.ArrayList;
 public class Flight {
     
     private final String id;
-    private ArrayList<Passenger> passengers;
+    ArrayList<Passenger> passengers;
     private Plane plane;
     private Location departureLocation;
     private Location scaleLocation;
@@ -54,9 +54,7 @@ public class Flight {
         
         this.plane.addFlight(this);
     }
-     public void addPassenger(Passenger passenger) {
-        this.passengers.add(passenger);
-    }
+     
    
     
     public String getId() {
@@ -103,9 +101,7 @@ public class Flight {
         this.departureDate = departureDate;
     }
     
-    public LocalDateTime calculateArrivalDate() {
-        return departureDate.plusHours(hoursDurationScale).plusHours(hoursDurationArrival).plusMinutes(minutesDurationScale).plusMinutes(minutesDurationArrival);
-    }
+   
     
     public void delay(int hours, int minutes) {
         this.departureDate = this.departureDate.plusHours(hours).plusMinutes(minutes);
