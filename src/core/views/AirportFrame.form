@@ -1381,7 +1381,7 @@
                                   <Component id="btnUpdate" min="-2" max="-2" attributes="0"/>
                               </Group>
                           </Group>
-                          <EmptySpace pref="554" max="32767" attributes="0"/>
+                          <EmptySpace pref="586" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -1618,7 +1618,7 @@
                               <Component id="comboBoxFlightAdd" min="-2" max="-2" attributes="0"/>
                               <Component id="txtIDAdd" min="-2" pref="130" max="-2" attributes="0"/>
                           </Group>
-                          <EmptySpace pref="829" max="32767" attributes="0"/>
+                          <EmptySpace pref="860" max="32767" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="1" attributes="0">
                           <EmptySpace max="32767" attributes="0"/>
@@ -1718,7 +1718,7 @@
                       <Group type="102" attributes="0">
                           <EmptySpace min="-2" pref="269" max="-2" attributes="0"/>
                           <Component id="jScrollPane1" min="-2" pref="590" max="-2" attributes="0"/>
-                          <EmptySpace pref="291" max="32767" attributes="0"/>
+                          <EmptySpace pref="323" max="32767" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="1" attributes="0">
                           <EmptySpace max="32767" attributes="0"/>
@@ -1799,7 +1799,7 @@
                                   <Component id="jScrollPane2" min="-2" pref="1078" max="-2" attributes="0"/>
                               </Group>
                           </Group>
-                          <EmptySpace pref="25" max="32767" attributes="0"/>
+                          <EmptySpace pref="57" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -1879,7 +1879,7 @@
                                   <Component id="btnRefreshShowAllFlights" min="-2" max="-2" attributes="0"/>
                               </Group>
                           </Group>
-                          <EmptySpace pref="21" max="32767" attributes="0"/>
+                          <EmptySpace pref="53" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -1960,7 +1960,7 @@
                                   <Component id="jScrollPane4" min="-2" pref="816" max="-2" attributes="0"/>
                               </Group>
                           </Group>
-                          <EmptySpace pref="189" max="32767" attributes="0"/>
+                          <EmptySpace pref="221" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -2036,7 +2036,7 @@
                                   <Component id="jScrollPane5" min="-2" pref="652" max="-2" attributes="0"/>
                               </Group>
                           </Group>
-                          <EmptySpace pref="272" max="32767" attributes="0"/>
+                          <EmptySpace pref="304" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -2114,7 +2114,7 @@
                                   </Group>
                                   <EmptySpace min="-2" pref="79" max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="comboBoxHourDeayFlight" pref="105" max="32767" attributes="0"/>
+                                      <Component id="comboBoxHourDeayFlight" pref="138" max="32767" attributes="0"/>
                                       <Component id="comboBoxIDDelayFlight" max="32767" attributes="0"/>
                                   </Group>
                               </Group>

@@ -1671,7 +1671,7 @@ public class AirportFrame extends javax.swing.JFrame {
             }
         }
 
-        flight.delay(hours, minutes);
+        //flight.delay(hours, minutes);
     }//GEN-LAST:event_btnDelayDelayFlightActionPerformed
 
     private void btnRefreshShowMyFlightsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRefreshShowMyFlightsActionPerformed

@@ -19,8 +19,9 @@ public class Main {
     LoadDataJson dataLoader = new LoadDataJson();
     dataLoader.loadAllData();
 
-    //  mostrar la interfaz gráfica
+    //  mostrar los datos guardados
     LoadDataJson.checkStorageContents();
+    //mostrar interfaz
         System.setProperty("flatlaf.useNativeLibrary", "false");
 
         try {
