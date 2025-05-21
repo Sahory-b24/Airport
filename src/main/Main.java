@@ -6,6 +6,7 @@ package main;
 
 import core.views.AirportFrame;
 import com.formdev.flatlaf.FlatDarkLaf;
+import core.models.loadData.LoadDataJson;
 import javax.swing.UIManager;
 
 /**
@@ -14,6 +15,12 @@ import javax.swing.UIManager;
  */
 public class Main {
     public static void main(String args[]) {
+          // Cargar todos los datos de los JSON
+    LoadDataJson dataLoader = new LoadDataJson();
+    dataLoader.loadAllData();
+
+    //  mostrar la interfaz gráfica
+    LoadDataJson.checkStorageContents();
         System.setProperty("flatlaf.useNativeLibrary", "false");
 
         try {
