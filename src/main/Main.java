@@ -18,9 +18,6 @@ public class Main {
           // Cargar todos los datos de los JSON
     LoadDataJson dataLoader = new LoadDataJson();
     dataLoader.loadAllData();
-
-    //  mostrar los datos guardados
-    LoadDataJson.checkStorageContents();
     //mostrar interfaz
         System.setProperty("flatlaf.useNativeLibrary", "false");
 

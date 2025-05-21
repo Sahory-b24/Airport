@@ -34,16 +34,12 @@ public class FlightController {
     private static final FlightDelay delayStrategy = new SimpleFlightDelay();
     private static final Pattern FLIGHT_ID_PATTERN = Pattern.compile("[A-Z]{3}\\d{3}");
 
-    /**
-     * Creates a new flight in the system.
-     * Validates input data and references to other objects like Plane and Locations.
-     */
+
     public static Response createFlight(String id, String planeId, String departureLocationId,
                                         String arrivalLocationId, String scaleLocationId, // Can be null or empty
                                         String departureDateStr, int hoursDurationArrival, int minutesDurationArrival,
                                         int hoursDurationScale, int minutesDurationScale) {
 
-        // 1. Format and requirement validations
         if (id == null || !FLIGHT_ID_PATTERN.matcher(id).matches()) {
             return new Response("Invalid flight ID. Must be in the format XXXYYY (3 uppercase letters followed by 3 digits).", Status.BAD_REQUEST);
         }
@@ -57,8 +53,6 @@ public class FlightController {
         if (departureDateStr == null || departureDateStr.trim().isEmpty()) {
             return new Response("Departure date is required.", Status.BAD_REQUEST);
         }
-
-        // Validate total flight time > 00:00
         boolean hasScale = scaleLocationId != null && !scaleLocationId.trim().isEmpty();
         long totalMinutesDuration = (hoursDurationArrival * 60L) + minutesDurationArrival;
         if (hasScale) {
@@ -67,7 +61,6 @@ public class FlightController {
         if (totalMinutesDuration <= 0) {
             return new Response("Total flight time must be greater than 00:00.", Status.BAD_REQUEST);
         }
-        // If no scale, scale duration must be 0
         if (!hasScale && (hoursDurationScale != 0 || minutesDurationScale != 0)) {
             return new Response("If there is no scale, the scale duration time must be 0.", Status.BAD_REQUEST);
         }
@@ -75,25 +68,18 @@ public class FlightController {
         LocalDateTime departureDate;
         try {
             departureDate = LocalDateTime.parse(departureDateStr);
-            // Optional: Validate that it's not in the past
-            // if (departureDate.isBefore(LocalDateTime.now())) {
-            //     return new Response("Departure date cannot be in the past.", Status.BAD_REQUEST);
-            // }
         } catch (DateTimeParseException e) {
             return new Response("Invalid departure date format. Use yyyy-MM-ddTHH:MM:SS.", Status.BAD_REQUEST);
         }
 
-        // 2. Get Repository Instances
         FlightRepository flightRepo = FlightRepository.getInstance();
         PlaneRepository planeRepo = PlaneRepository.getInstance();
         LocationRepository locationRepo = LocationRepository.getInstance();
 
-        // 3. Check Flight ID uniqueness
+        
         if (flightRepo.getFlight(id) != null) {
             return new Response("A flight with ID: " + id + " already exists.", Status.BAD_REQUEST);
         }
-
-        // 4. Resolve dependencies (Plane, Locations)
         Plane plane = planeRepo.getPlane(planeId);
         if (plane == null) {
             return new Response("Plane with ID " + planeId + " not found.", Status.NOT_FOUND);
@@ -124,7 +110,7 @@ public class FlightController {
             return new Response("Scale location cannot be the same as departure or arrival location.", Status.BAD_REQUEST);
         }
 
-        // 5. Create and save the Flight
+
         Flight newFlight;
         if (hasScale) {
             newFlight = new Flight(id, plane, departureLoc, scaleLoc, arrivalLoc, departureDate,
@@ -141,12 +127,9 @@ public class FlightController {
         }
     }
 
-    /**
-     * Delays an existing flight.
-     * Uses the FlightDelay strategy to apply the delay.
-     */
+    
     public static Response delayFlight(String flightId, int hours, int minutes) {
-        // Validations
+        
         if (flightId == null || flightId.trim().isEmpty()) {
             return new Response("Flight ID is required to delay it.", Status.BAD_REQUEST);
         }
@@ -173,11 +156,8 @@ public class FlightController {
         }
     }
 
-    /**
-     * Adds a passenger to an existing flight.
-     */
+   
     public static Response addPassengerToFlight(long passengerId, String flightId) {
-        // Validations
         if (flightId == null || flightId.trim().isEmpty()) {
             return new Response("Flight ID is required.", Status.BAD_REQUEST);
         }
@@ -198,38 +178,22 @@ public class FlightController {
         if (flight.getNumPassengers() >= flight.getPlane().getMaxCapacity()) {
             return new Response("Flight " + flightId + " has reached its maximum passenger capacity.", Status.BAD_REQUEST);
         }
-        
-        // Consider adding a check if passenger is already in flight.getPassengers() list
-
         flight.addPassenger(passenger); 
         passenger.addFlight(flight);    
 
         return new Response("Passenger " + passengerId + " added to flight " + flightId + " successfully.", Status.OK, flight.clone()); //
     }
 
-    /**
-     * Gets all flights, ordered by departure date.
-     * The FlightRepository should handle the actual sorting.
-     */
+
     public static Response getAllFlightsSortedByDate() {
         FlightRepository flightRepo = FlightRepository.getInstance();
-        // Assumes FlightRepository has a method that returns flights sorted by date.
-        // List<Flight> flights = flightRepo.getAllFlightsOrderByDepartureDate(); // Ideal method
-        List<Flight> flights = flightRepo.getAllFlights(); // Using existing method; sorting must be implemented in repo
-        // If sorting is not in repo, it would be:
-        // flights.sort(Comparator.comparing(Flight::getDepartureDate));
-
-
+        List<Flight> flights = flightRepo.getAllFlights(); 
         List<Flight> flightClones = new ArrayList<>();
         for (Flight f : flights) {
             flightClones.add(f.clone()); //
         }
         return new Response("Flights retrieved successfully.", Status.OK, flightClones);
     }
-    
-    /**
-     * Gets flights for a specific passenger, ordered by departure date.
-     */
     public static Response getFlightsForPassenger(long passengerId) {
         PassengerRepository passengerRepo = PassengerRepository.getInstance();
         Passenger passenger = passengerRepo.getPassenger(passengerId);
@@ -239,8 +203,6 @@ public class FlightController {
         }
 
         ArrayList<Flight> flights = new ArrayList<>(passenger.getFlights()); 
-        
-        // Sort passenger's flights by departure date
         flights.sort((f1, f2) -> f1.getDepartureDate().compareTo(f2.getDepartureDate()));
 
         List<Flight> flightClones = new ArrayList<>();
@@ -249,11 +211,6 @@ public class FlightController {
         }
         return new Response("Flights for passenger " + passengerId + " retrieved.", Status.OK, flightClones);
     }
-
-    /**
-     * Calculates the arrival date of a specific flight using the configured strategy.
-     * Utility method if the view needs this data separately.
-     */
     public static LocalDateTime getCalculatedArrivalDateForFlight(Flight flight) {
         if (flight == null) {
             return null;
