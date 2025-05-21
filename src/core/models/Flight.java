@@ -54,7 +54,9 @@ public class Flight {
         
         this.plane.addFlight(this);
     }
-     
+      public void addPassenger(Passenger passenger) {
+        this.passengers.add(passenger);
+    } 
    
     
     public String getId() {
@@ -101,7 +103,9 @@ public class Flight {
         this.departureDate = departureDate;
     }
     
-   
+    public LocalDateTime calculateArrivalDate() {
+        return this.getDepartureDate().plusHours(this.getHoursDurationArrival()).plusHours(this.getHoursDurationArrival()).plusMinutes(this.getMinutesDurationScale()).plusMinutes(this.getMinutesDurationArrival());
+    }
     
     public void delay(int hours, int minutes) {
         this.departureDate = this.departureDate.plusHours(hours).plusMinutes(minutes);

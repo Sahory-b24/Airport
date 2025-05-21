@@ -4,14 +4,14 @@
  */
 package core.models;
 
-import core.models.Flight;
+import core.models.utils.Add;
 import java.util.ArrayList;
 
 /**
  *
  * @author edangulo
  */
-public class Plane {
+public class Plane implements Add{
     
     private final String id;
     private String brand;
@@ -28,7 +28,7 @@ public class Plane {
         this.airline = airline;
         this.flights = new ArrayList<>();
     }
-
+    @Override
     public void addFlight(Flight flight) {
         this.flights.add(flight);
     }

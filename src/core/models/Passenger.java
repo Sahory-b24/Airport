@@ -4,7 +4,7 @@
  */
 package core.models;
 
-import core.models.Flight;
+import core.models.utils.Add;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
@@ -13,7 +13,7 @@ import java.util.ArrayList;
  *
  * @author edangulo
  */
-public class Passenger {
+public class Passenger implements Add{
     
     private final long id;
     private String firstname;
@@ -34,7 +34,7 @@ public class Passenger {
         this.country = country;
         this.flights = new ArrayList<>();
     }
-
+    @Override
     public void addFlight(Flight flight) {
         this.flights.add(flight);
     }
@@ -103,9 +103,7 @@ public class Passenger {
         return "+" + countryPhoneCode + " " + phone;
     }
     
-    public int calculateAge() {
-        return Period.between(birthDate, LocalDate.now()).getYears();
-    }
+    
     
     public int getNumFlights() {
         return flights.size();
