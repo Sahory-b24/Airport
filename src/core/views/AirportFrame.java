@@ -10,6 +10,7 @@ import core.models.Passenger;
 import core.models.Plane;
 import core.controllers.LocationController;
 import core.controllers.PassengerController;
+import core.controllers.PlaneController;
 import core.controllers.utils.Response;
 import java.awt.Color;
 import java.time.DateTimeException;
@@ -1455,21 +1456,21 @@ public class AirportFrame extends javax.swing.JFrame {
 
     private void btnRegisterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegisterActionPerformed
         // TODO add your handling code here:
-        try {
+     
             // Obtener y validar campos
-            long id = Long.parseLong(txtIDRegistration.getText().trim());
+            String id = txtIDRegistration.getText().trim();
             String firstname = txtFirstNameRegistration.getText().trim();
             String lastname = txtLastNameRegistration.getText().trim();
-            int year = Integer.parseInt(txtBirthdateRegistration.getText().trim());
-            int month = Integer.parseInt(comboBoxMonthRegistration.getSelectedItem().toString());
-            int day = Integer.parseInt(comboBoxDayRegistration.getSelectedItem().toString());
-            int phoneCode = Integer.parseInt(txtPhoneCodeRegistration.getText().trim());
-            long phone = Long.parseLong(txtPhoneRegistration.getText().trim());
+            String year = txtBirthdateRegistration.getText().trim();
+            String month = comboBoxMonthRegistration.getSelectedItem().toString().trim();
+            String day = comboBoxDayRegistration.getSelectedItem().toString().trim();
+            String phoneCode = txtPhoneCodeRegistration.getText().trim();
+            String phone = txtPhoneRegistration.getText().trim();
             String country = txtCountryRegistration.getText().trim();
 
             // Construir fecha
-            LocalDate birthDate = LocalDate.of(year, month, day);
-
+            String birthDate = year + "-" + month + "-" + day;
+            
             // Llamar al controlador
             Response response = PassengerController.createPassenger(id, firstname, lastname, birthDate, phoneCode, phone, country);
 
@@ -1492,13 +1493,6 @@ public class AirportFrame extends javax.swing.JFrame {
                 txtCountryRegistration.setText("");
             }
 
-        } catch (NumberFormatException ex) {
-            JOptionPane.showMessageDialog(this,"All numeric fields must be valid numbers or not empty", "Error 400", JOptionPane.WARNING_MESSAGE);
-        } catch (DateTimeException ex) {
-            JOptionPane.showMessageDialog(this, "Invalid date selected", "Error 400", JOptionPane.WARNING_MESSAGE);
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, "Unexpected error: " + ex.getMessage(), "Error 500", JOptionPane.ERROR_MESSAGE);
-        }
     }//GEN-LAST:event_btnRegisterActionPerformed
 
     private void btnCreateAirplaneRegistrationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreateAirplaneRegistrationActionPerformed
@@ -1506,23 +1500,35 @@ public class AirportFrame extends javax.swing.JFrame {
         String id = txtIDAirplaneRegistrarion.getText();
         String brand = txtBrandAirplaneRegistration.getText();
         String model = txtModelAirplaneRegistration.getText();
-        int maxCapacity = Integer.parseInt(txtMaxCapacityAirplaneRegistration.getText());
+        String maxCapacity = txtMaxCapacityAirplaneRegistration.getText();
         String airline = txtAirlineAirplaneRegistration.getText();
-
-        this.planes.add(new Plane(id, brand, model, maxCapacity, airline));
-
-        this.comboBoxPlaneFlightRegistration.addItem(id);
+        
+        Response response = PlaneController.createPlane(id, brand, model, maxCapacity, airline);
+        
+        if (response.getStatus() >= 500) {
+                JOptionPane.showMessageDialog(this, response.getMessage(), "Error " + response.getStatus(), JOptionPane.ERROR_MESSAGE);
+            } else if (response.getStatus() >= 400) {
+                JOptionPane.showMessageDialog(this, response.getMessage(), "Error " + response.getStatus(), JOptionPane.WARNING_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(this, response.getMessage(), "Success " + response.getStatus(), JOptionPane.INFORMATION_MESSAGE);
+                this.comboBoxPlaneFlightRegistration.addItem(id);
+                txtIDAirplaneRegistrarion.setText("");
+                txtBrandAirplaneRegistration.setText("");
+                txtModelAirplaneRegistration.setText("");
+                txtMaxCapacityAirplaneRegistration.setText("");
+                txtAirlineAirplaneRegistration.setText("");
+            }
     }//GEN-LAST:event_btnCreateAirplaneRegistrationActionPerformed
 
     private void btnCreateLocationRegistrationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreateLocationRegistrationActionPerformed
         // TODO add your handling code here:
-        try {
+        
             String id = txtAirportIDLocationRegistration.getText().trim();
             String name = txtAirportNameLocationRegistration.getText().trim();
             String city = txtAirportCityLocationRegistration.getText().trim();
             String country = txtAirportCountryLocationRegistration.getText().trim();
-            double latitude = Double.parseDouble(txtAirportLatitudeLocationRegistration.getText().trim());
-            double longitude = Double.parseDouble(txtAirportLongitudeLocationRegistration.getText().trim());
+            String latitude = txtAirportLatitudeLocationRegistration.getText().trim();
+            String longitude = txtAirportLongitudeLocationRegistration.getText().trim();
 
             Response response = LocationController.createLocation(id, name, city, country, latitude, longitude);
 
@@ -1546,9 +1552,7 @@ public class AirportFrame extends javax.swing.JFrame {
                 txtAirportLongitudeLocationRegistration.setText("");
             }
 
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "Latitude and longitude must be valid numbers", "Error 400", JOptionPane.WARNING_MESSAGE);
-        }
+        
     }//GEN-LAST:event_btnCreateLocationRegistrationActionPerformed
 
     private void btnCreateFlightRegistrationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreateFlightRegistrationActionPerformed
@@ -1651,7 +1655,7 @@ public class AirportFrame extends javax.swing.JFrame {
         }
 
         passenger.addFlight(flight);
-        flight.addPassenger(passenger);
+//        flight.addPassenger(passenger);
     }//GEN-LAST:event_btnAddActionPerformed
 
     private void btnDelayDelayFlightActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDelayDelayFlightActionPerformed
@@ -1684,9 +1688,9 @@ public class AirportFrame extends javax.swing.JFrame {
         ArrayList<Flight> flights = passenger.getFlights();
         DefaultTableModel model = (DefaultTableModel) tableShowMyFlights.getModel();
         model.setRowCount(0);
-        for (Flight flight : flights) {
-            model.addRow(new Object[]{flight.getId(), flight.getDepartureDate(), flight.calculateArrivalDate()});
-        }
+//        for (Flight flight : flights) {
+//            model.addRow(new Object[]{flight.getId(), flight.getDepartureDate(), flight.calculateArrivalDate()});
+//        }
     }//GEN-LAST:event_btnRefreshShowMyFlightsActionPerformed
 
     private void btnRefreshShowAllPassengersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRefreshShowAllPassengersActionPerformed
@@ -1702,9 +1706,9 @@ public class AirportFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
         DefaultTableModel model = (DefaultTableModel) tableShowAllFlights.getModel();
         model.setRowCount(0);
-        for (Flight flight : this.flights) {
-            model.addRow(new Object[]{flight.getId(), flight.getDepartureLocation().getAirportId(), flight.getArrivalLocation().getAirportId(), (flight.getScaleLocation() == null ? "-" : flight.getScaleLocation().getAirportId()), flight.getDepartureDate(), flight.calculateArrivalDate(), flight.getPlane().getId(), flight.getNumPassengers()});
-        }
+//        for (Flight flight : this.flights) {
+//            model.addRow(new Object[]{flight.getId(), flight.getDepartureLocation().getAirportId(), flight.getArrivalLocation().getAirportId(), (flight.getScaleLocation() == null ? "-" : flight.getScaleLocation().getAirportId()), flight.getDepartureDate(), flight.calculateArrivalDate(), flight.getPlane().getId(), flight.getNumPassengers()});
+//        }
     }//GEN-LAST:event_btnRefreshShowAllFlightsActionPerformed
 
     private void btnRefreshShowAllPlanesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRefreshShowAllPlanesActionPerformed

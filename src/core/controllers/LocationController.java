@@ -12,7 +12,8 @@ import core.controllers.utils.Status;
  * @author Sahory Blanco
  */
 public class LocationController {
-    public static Response createLocation(String id, String name, String city, String country, double latitude, double longitude) {
+    public static Response createLocation(String id, String name, String city, String country, String latitude, String longitude) {
+        double lat, lon;
         // Validaciones
         if (id == null || !id.matches("[A-Z]{3}")) {
             return new Response("ID must be 3 uppercase letters", Status.BAD_REQUEST);
@@ -30,12 +31,23 @@ public class LocationController {
             return new Response("Country cannot be empty", Status.BAD_REQUEST);
         }
 
-        if (latitude < -90 || latitude > 90) {
-            return new Response("Latitude must be between -90 and 90", Status.BAD_REQUEST);
+        try {
+            lat = Double.parseDouble(latitude);
+            if (lat < -90 || lat > 90) {
+                return new Response("Latitude must be between -90 and 90", Status.BAD_REQUEST);
+            }
+        } catch (NumberFormatException e) {
+            return new Response("Latitude must be numeric", Status.BAD_REQUEST);
         }
 
-        if (longitude < -180 || longitude > 180) {
-            return new Response("Longitude must be between -180 and 180", Status.BAD_REQUEST);
+        // Validar y convertir longitud
+        try {
+            lon = Double.parseDouble(longitude);
+            if (lon < -180 || lon > 180) {
+                return new Response("Longitude must be between -180 and 180", Status.BAD_REQUEST);
+            }
+        } catch (NumberFormatException e) {
+            return new Response("Longitude must be numeric", Status.BAD_REQUEST);
         }
 
 //        LocationRepository repo = LocationRepository.getInstance();
