@@ -74,7 +74,9 @@ public class AirportFrame extends javax.swing.JFrame {
             }
         }
     }
-
+    private void metodo (){
+        
+    }
     private void generateMonths() {
         for (int i = 1; i < 13; i++) {
             comboBoxMonthRegistration.addItem("" + i);
