@@ -11,7 +11,12 @@ import core.models.Plane;
 import core.controllers.LocationController;
 import core.controllers.PassengerController;
 import core.controllers.PlaneController;
+import core.controllers.table.FlightTableController;
+import core.controllers.table.LocationTableController;
+import core.controllers.table.PassengerTableController;
+import core.controllers.table.PlaneTableController;
 import core.controllers.utils.Response;
+import core.models.loadData.ShowJsonComboBox;
 import java.awt.Color;
 import java.time.DateTimeException;
 import java.time.LocalDate;
@@ -51,6 +56,14 @@ public class AirportFrame extends javax.swing.JFrame {
         this.generateHours();
         this.generateMinutes();
         this.blockPanels();
+        
+        ShowJsonComboBox.loadPassengers(userSelect);
+        ShowJsonComboBox.loadPlanes(comboBoxPlaneFlightRegistration);
+        ShowJsonComboBox.loadLocations(comboBoxDepartureLocationFlightRegistration);
+        ShowJsonComboBox.loadLocations(comboBoxArrivalLocationFlightRegistration);
+        ShowJsonComboBox.loadLocations(comboBoxScaleLocationFlightRegistration);
+        ShowJsonComboBox.loadFlights(comboBoxFlightAdd);
+        
     }
 
     private void blockPanels() {
@@ -1607,31 +1620,39 @@ public class AirportFrame extends javax.swing.JFrame {
 
     private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
         // TODO add your handling code here:
-        long id = Long.parseLong(txtIDUpdate.getText());
-        String firstname = txtFirstNameUpdate.getText();
-        String lastname = txtLastNameUpdate.getText();
-        int year = Integer.parseInt(txtBirthDateUpdate.getText());
-        int month = Integer.parseInt(comboBoxMonthRegistration.getItemAt(comboBoxMonthUpdate.getSelectedIndex()));
-        int day = Integer.parseInt(comboBoxDayRegistration.getItemAt(comboBoxDayUpdate.getSelectedIndex()));
-        int phoneCode = Integer.parseInt(txtPhoneCodeUpdate.getText());
-        long phone = Long.parseLong(txtPhoneUpdate.getText());
-        String country = txtCountryUpdate.getText();
+        String id = txtIDUpdate.getText().trim();
+        String firstname = txtFirstNameUpdate.getText().trim();
+        String lastname = txtLastNameUpdate.getText().trim();
+        String year = txtBirthDateUpdate.getText().trim();
+        String month = comboBoxMonthUpdate.getSelectedItem().toString().trim();
+        String day = comboBoxDayUpdate.getSelectedItem().toString().trim();
+        String phoneCode = txtPhoneCodeUpdate.getText().trim();
+        String phone = txtPhoneUpdate.getText().trim();
+        String country = txtCountryUpdate.getText().trim();
+        
 
-        LocalDate birthDate = LocalDate.of(year, month, day);
+        String birthDate = year + "-" + month + "-" + day;
+        
+        Response response = PassengerController.updatePassenger(id, firstname, lastname, year, month, day, phoneCode, phone, country );
 
-        Passenger passenger = null;
-        for (Passenger p : this.passengers) {
-            if (p.getId() == id) {
-                passenger = p;
+        if (response.getStatus() >= 500) {
+                JOptionPane.showMessageDialog(this, response.getMessage(), "Error " + response.getStatus(), JOptionPane.ERROR_MESSAGE);
+            } else if (response.getStatus() >= 400) {
+                JOptionPane.showMessageDialog(this, response.getMessage(), "Error " + response.getStatus(), JOptionPane.WARNING_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(this, response.getMessage(), "Success " + response.getStatus(), JOptionPane.INFORMATION_MESSAGE);
+
+                txtIDUpdate.setText("");
+                txtFirstNameUpdate.setText("");
+                txtLastNameUpdate.setText("");
+                txtBirthDateUpdate.setText("");
+                comboBoxMonthUpdate.setSelectedIndex(0);
+                comboBoxDayUpdate.setSelectedIndex(0);
+                txtPhoneCodeUpdate.setText("");
+                txtPhoneUpdate.setText("");
+                txtCountryUpdate.setText("");
             }
-        }
 
-        passenger.setFirstname(firstname);
-        passenger.setLastname(lastname);
-        passenger.setBirthDate(birthDate);
-        passenger.setCountryPhoneCode(phoneCode);
-        passenger.setPhone(phone);
-        passenger.setCountry(country);
     }//GEN-LAST:event_btnUpdateActionPerformed
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
@@ -1695,17 +1716,33 @@ public class AirportFrame extends javax.swing.JFrame {
 
     private void btnRefreshShowAllPassengersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRefreshShowAllPassengersActionPerformed
         // TODO add your handling code here:
-        DefaultTableModel model = (DefaultTableModel) tableShowAllPassengers.getModel();
-        model.setRowCount(0);
-        for (Passenger passenger : this.passengers) {
-            model.addRow(new Object[]{passenger.getId(), passenger.getFullname(), passenger.getBirthDate(), passenger.calculateAge(), passenger.generateFullPhone(), passenger.getCountry(), passenger.getNumFlights()});
+        Response response = PassengerTableController.updatePassengersTable((DefaultTableModel) tableShowAllPassengers.getModel());
+
+        if (response.getStatus() >= 500) {
+            JOptionPane.showMessageDialog(null, response.getMessage(), "Error " + response.getStatus(), JOptionPane.ERROR_MESSAGE);
+        } else if (response.getStatus() >= 400) {
+            JOptionPane.showMessageDialog(null, response.getMessage(), "Error " + response.getStatus(), JOptionPane.WARNING_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(null, response.getMessage(), "Response Message", JOptionPane.INFORMATION_MESSAGE);
         }
+//        for (Passenger passenger : this.passengers) {
+//            model.addRow(new Object[]{passenger.getId(), passenger.getFullname(), passenger.getBirthDate(), passenger.calculateAge(), passenger.generateFullPhone(), passenger.getCountry(), passenger.getNumFlights()});
+//        }
     }//GEN-LAST:event_btnRefreshShowAllPassengersActionPerformed
 
     private void btnRefreshShowAllFlightsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRefreshShowAllFlightsActionPerformed
         // TODO add your handling code here:
-        DefaultTableModel model = (DefaultTableModel) tableShowAllFlights.getModel();
-        model.setRowCount(0);
+        Response response = FlightTableController.updateFlightsTable((DefaultTableModel) tableShowAllFlights.getModel());
+
+        if (response.getStatus() >= 500) {
+            JOptionPane.showMessageDialog(null, response.getMessage(), "Error " + response.getStatus(), JOptionPane.ERROR_MESSAGE);
+        } else if (response.getStatus() >= 400) {
+            JOptionPane.showMessageDialog(null, response.getMessage(), "Error " + response.getStatus(), JOptionPane.WARNING_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(null, response.getMessage(), "Response Message", JOptionPane.INFORMATION_MESSAGE);
+        }
+//        DefaultTableModel model = (DefaultTableModel) tableShowAllFlights.getModel();
+//        model.setRowCount(0);
 //        for (Flight flight : this.flights) {
 //            model.addRow(new Object[]{flight.getId(), flight.getDepartureLocation().getAirportId(), flight.getArrivalLocation().getAirportId(), (flight.getScaleLocation() == null ? "-" : flight.getScaleLocation().getAirportId()), flight.getDepartureDate(), flight.calculateArrivalDate(), flight.getPlane().getId(), flight.getNumPassengers()});
 //        }
@@ -1713,19 +1750,27 @@ public class AirportFrame extends javax.swing.JFrame {
 
     private void btnRefreshShowAllPlanesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRefreshShowAllPlanesActionPerformed
         // TODO add your handling code here:
-        DefaultTableModel model = (DefaultTableModel) tableShowAllPlanes.getModel();
-        model.setRowCount(0);
-        for (Plane plane : this.planes) {
-            model.addRow(new Object[]{plane.getId(), plane.getBrand(), plane.getModel(), plane.getMaxCapacity(), plane.getAirline(), plane.getNumFlights()});
+        Response response = PlaneTableController.updatePlanesTable((DefaultTableModel) tableShowAllPlanes.getModel());
+
+        if (response.getStatus() >= 500) {
+            JOptionPane.showMessageDialog(null, response.getMessage(), "Error " + response.getStatus(), JOptionPane.ERROR_MESSAGE);
+        } else if (response.getStatus() >= 400) {
+            JOptionPane.showMessageDialog(null, response.getMessage(), "Error " + response.getStatus(), JOptionPane.WARNING_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(null, response.getMessage(), "Response Message", JOptionPane.INFORMATION_MESSAGE);
         }
     }//GEN-LAST:event_btnRefreshShowAllPlanesActionPerformed
 
     private void btnRefreshShowAllLocationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRefreshShowAllLocationActionPerformed
         // TODO add your handling code here:
-        DefaultTableModel model = (DefaultTableModel) tableShowAllLocations.getModel();
-        model.setRowCount(0);
-        for (Location location : this.locations) {
-            model.addRow(new Object[]{location.getAirportId(), location.getAirportName(), location.getAirportCity(), location.getAirportCountry()});
+        Response response = LocationTableController.updateLocationsTable((DefaultTableModel) tableShowAllLocations.getModel());
+
+        if (response.getStatus() >= 500) {
+            JOptionPane.showMessageDialog(null, response.getMessage(), "Error " + response.getStatus(), JOptionPane.ERROR_MESSAGE);
+        } else if (response.getStatus() >= 400) {
+            JOptionPane.showMessageDialog(null, response.getMessage(), "Error " + response.getStatus(), JOptionPane.WARNING_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(null, response.getMessage(), "Response Message", JOptionPane.INFORMATION_MESSAGE);
         }
     }//GEN-LAST:event_btnRefreshShowAllLocationActionPerformed
 

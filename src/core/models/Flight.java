@@ -144,10 +144,10 @@ public class Flight {
             );
         }
 
-        // Clonamos la lista de pasajeros (referencias, no deep copy)
-//        for (Passenger p : this.passengers) {
-//            copy.addPassenger(p); // puedes usar p.clone() si quieres copia completa
-//        }
+         //Clonamos la lista de pasajeros (referencias, no deep copy)
+        for (Passenger p : this.passengers) {
+            copy.addPassenger(p); // puedes usar p.clone() si quieres copia completa
+        }
 
         return copy;
     }

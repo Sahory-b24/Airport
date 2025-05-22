@@ -6,6 +6,8 @@ package core.controllers;
 
 import core.controllers.utils.Response;
 import core.controllers.utils.Status;
+import core.models.Location;
+import core.models.storage.LocationRepository;
 
 /**
  *
@@ -50,13 +52,13 @@ public class LocationController {
             return new Response("Longitude must be numeric", Status.BAD_REQUEST);
         }
 
-//        LocationRepository repo = LocationRepository.getInstance();
-//
-//        if (repo.exists(id)) {
-//            return new Response("Location with this ID already exists", StatusCode.BAD_REQUEST);
-//        }
+        LocationRepository repo = LocationRepository.getInstance();
 
-        //repo.add(new Location(id, name, city, country, latitude, longitude));
+        if (repo.getLocation(id) != null) {
+            return new Response("Location with this ID already exists", Status.BAD_REQUEST);
+        }
+        Location l = new Location(id, name, city, country, lat, lon);
+        repo.addLocation(l);
         return new Response("Location created successfully", Status.CREATED);
     }
 }

@@ -100,4 +100,92 @@ public class PassengerController {
             return new Response("Unexpected error: " + e.getMessage(), Status.INTERNAL_SERVER_ERROR);
         }
     }
+    public static Response updatePassenger(
+        String id,
+        String firstname,
+        String lastname,
+        String year,
+        String month,
+        String day,
+        String countryPhoneCode,
+        String phone,
+        String country
+    ) {
+        long idLong;
+        int phoneCodeInt;
+        long phoneLong;
+        LocalDate birthDate;
+
+        // ID
+        try {
+            idLong = Long.parseLong(id);
+            if (idLong <= 0 || id.length() > 15) {
+                return new Response("ID must be > 0 and max 15 digits", Status.BAD_REQUEST);
+            }
+        } catch (NumberFormatException e) {
+            return new Response("ID must be numeric", Status.BAD_REQUEST);
+        }
+
+        // Buscar pasajero
+        PassengerRepository repo = PassengerRepository.getInstance();
+        Passenger passenger = repo.getPassenger(idLong);
+        if (passenger == null) {
+            return new Response("Passenger not found", Status.NOT_FOUND);
+        }
+
+        // Validar nombre
+        if (firstname == null || firstname.trim().isEmpty()) {
+            return new Response("Firstname cannot be empty", Status.BAD_REQUEST);
+        }
+
+        if (lastname == null || lastname.trim().isEmpty()) {
+            return new Response("Lastname cannot be empty", Status.BAD_REQUEST);
+        }
+
+        // Validar fecha
+        if (!year.matches("\\d{4}") || !month.matches("\\d{1,2}") || !day.matches("\\d{1,2}")) {
+            return new Response("Birth date must be numeric (YYYY-MM-DD)", Status.BAD_REQUEST);
+        }
+        try {
+            int y = Integer.parseInt(year);
+            int m = Integer.parseInt(month);
+            int d = Integer.parseInt(day);
+            birthDate = LocalDate.of(y, m, d);
+        } catch (Exception e) {
+            return new Response("Invalid birth date", Status.BAD_REQUEST);
+        }
+
+        // Validar código país
+        try {
+            phoneCodeInt = Integer.parseInt(countryPhoneCode);
+            if (phoneCodeInt < 0 || countryPhoneCode.length() > 3) {
+                return new Response("Phone code must be >= 0 and max 3 digits", Status.BAD_REQUEST);
+            }
+        } catch (NumberFormatException e) {
+            return new Response("Phone code must be numeric", Status.BAD_REQUEST);
+        }
+
+        // Validar número
+        try {
+            phoneLong = Long.parseLong(phone);
+            if (phoneLong < 0 || phone.length() > 11) {
+                return new Response("Phone number must be >= 0 and max 11 digits", Status.BAD_REQUEST);
+            }
+        } catch (NumberFormatException e) {
+            return new Response("Phone must be numeric", Status.BAD_REQUEST);
+        }
+
+        // País
+        if (country == null || country.trim().isEmpty()) {
+            return new Response("Country cannot be empty", Status.BAD_REQUEST);
+        }
+        // Actualizar datos
+        passenger.setFirstname(firstname.trim());
+        passenger.setLastname(lastname.trim());
+        passenger.setBirthDate(birthDate);
+        passenger.setCountryPhoneCode(phoneCodeInt);
+        passenger.setPhone(phoneLong);
+        passenger.setCountry(country.trim());
+        return new Response("Passenger updated successfully", Status.OK);
+    }
 }

@@ -61,8 +61,8 @@ public class FlightRepository {
         flights.clear();
     }
 
-    public List<Flight> getAllFlights() {
-        List<Flight> copy = new ArrayList<>();
+    public ArrayList<Flight> getAllFlights() {
+        ArrayList<Flight> copy = new ArrayList<>();
         for (Flight f : flights) {
             copy.add(f.clone()); // requiere que Flight implemente Cloneable
         }
@@ -73,8 +73,8 @@ public class FlightRepository {
         flights.sort(Comparator.comparing(Flight::getId));
     }
 
-    public List<Flight> getAllFlightsOrdenados() {
-        List<Flight> copy = new ArrayList<>();
+    public ArrayList<Flight> getAllFlightsOrdenados() {
+        ArrayList<Flight> copy = new ArrayList<>();
         for (Flight f : flights) {
             copy.add(f.clone());
         }

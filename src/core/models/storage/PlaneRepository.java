@@ -61,8 +61,8 @@ public class PlaneRepository {
         planes.clear();
     }
 
-    public List<Plane> getAllPlanes() {
-        List<Plane> copy = new ArrayList<>();
+    public ArrayList<Plane> getAllPlanes() {
+        ArrayList<Plane> copy = new ArrayList<>();
         for (Plane p : planes) {
             copy.add(p.clone()); // necesita que Plane implemente Cloneable
         }
@@ -73,8 +73,8 @@ public class PlaneRepository {
         planes.sort(Comparator.comparing(Plane::getId));
     }
 
-    public List<Plane> getAllPlanesOrdenados() {
-        List<Plane> copy = new ArrayList<>();
+    public ArrayList<Plane> getAllPlanesOrdenados() {
+        ArrayList<Plane> copy = new ArrayList<>();
         for (Plane p : planes) {
             copy.add(p.clone());
         }
