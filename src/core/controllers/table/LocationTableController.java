@@ -19,7 +19,7 @@ public class LocationTableController {
     public static Response updateLocationsTable(DefaultTableModel model) {
         try {
             model.setRowCount(0);
-            ArrayList<Location> locations = LocationRepository.getInstance().getAllLocations();
+            ArrayList<Location> locations = LocationRepository.getInstance().getAllLocationsSorted();
 
             if (locations == null || locations.isEmpty()) {
                 return new Response("Location list is empty.", Status.NO_CONTENT);

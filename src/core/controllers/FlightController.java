@@ -155,8 +155,6 @@ public class FlightController {
             return new Response("Could not apply delay to flight " + flightId + ".", Status.BAD_REQUEST);
         }
     }
-
-   
     public static Response addPassengerToFlight(long passengerId, String flightId) {
         if (flightId == null || flightId.trim().isEmpty()) {
             return new Response("Flight ID is required.", Status.BAD_REQUEST);
@@ -183,17 +181,6 @@ public class FlightController {
 
         return new Response("Passenger " + passengerId + " added to flight " + flightId + " successfully.", Status.OK, flight.clone()); //
     }
-
-
-    public static Response getAllFlightsSortedByDate() {
-        FlightRepository flightRepo = FlightRepository.getInstance();
-        List<Flight> flights = flightRepo.getAllFlights(); 
-        List<Flight> flightClones = new ArrayList<>();
-        for (Flight f : flights) {
-            flightClones.add(f.clone()); //
-        }
-        return new Response("Flights retrieved successfully.", Status.OK, flightClones);
-    }
     public static Response getFlightsForPassenger(long passengerId) {
         PassengerRepository passengerRepo = PassengerRepository.getInstance();
         Passenger passenger = passengerRepo.getPassenger(passengerId);
@@ -211,6 +198,23 @@ public class FlightController {
         }
         return new Response("Flights for passenger " + passengerId + " retrieved.", Status.OK, flightClones);
     }
+    public static Response getAllFlightsSortedByDate() {
+    FlightRepository flightRepo = FlightRepository.getInstance();
+    // Llamar al método del repositorio que ya ordena por fecha
+    List<Flight> flights = flightRepo.getAllFlightsSorted(); // <-- CAMBIO AQUÍ
+
+    // El resto del método (crear clones, empaquetar en Response) permanece igual
+    // ya no necesitas: flights.sort(Comparator.comparing(Flight::getDepartureDate));
+
+    List<Flight> flightClones = new ArrayList<>();
+    for (Flight f : flights) {
+        flightClones.add(f.clone());
+    }
+    if (flightClones.isEmpty()) {
+        return new Response("No flights found.", Status.NO_CONTENT);
+    }
+    return new Response("Flights retrieved successfully.", Status.OK, flightClones);
+}
     public static LocalDateTime getCalculatedArrivalDateForFlight(Flight flight) {
         if (flight == null) {
             return null;

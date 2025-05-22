@@ -1678,7 +1678,7 @@ public class AirportFrame extends javax.swing.JFrame {
         }
 
         passenger.addFlight(flight);
-//        flight.addPassenger(passenger);
+        flight.addPassenger(passenger);
     }//GEN-LAST:event_btnAddActionPerformed
 
     private void btnDelayDelayFlightActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDelayDelayFlightActionPerformed

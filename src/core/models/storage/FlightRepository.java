@@ -6,8 +6,8 @@ package core.models.storage;
 
 import core.models.Flight;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
-import java.util.List;
 
 /**
  *
@@ -73,12 +73,12 @@ public class FlightRepository {
         flights.sort(Comparator.comparing(Flight::getId));
     }
 
-    public ArrayList<Flight> getAllFlightsOrdenados() {
-        ArrayList<Flight> copy = new ArrayList<>();
-        for (Flight f : flights) {
-            copy.add(f.clone());
-        }
-        copy.sort(Comparator.comparing(Flight::getId));
-        return copy;
+    public ArrayList<Flight> getAllFlightsSorted() {
+     ArrayList<Flight> copy = new ArrayList<>();
+    for (Flight f : this.flights) {
+        copy.add(f.clone());
     }
+    Collections.sort(copy, Comparator.comparing(Flight::getDepartureDate));
+    return copy;
+}
 }

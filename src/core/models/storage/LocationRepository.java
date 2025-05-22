@@ -72,7 +72,7 @@ public class LocationRepository {
         locations.sort(Comparator.comparing(Location::getAirportId));
     }
 
-    public ArrayList<Location> getAllLocationsOrdenadas() {
+    public ArrayList<Location> getAllLocationsSorted() {
         ArrayList<Location> copy = new ArrayList<>();
         for (Location l : locations) {
             copy.add(l.clone());

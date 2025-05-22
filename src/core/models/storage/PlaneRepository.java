@@ -73,7 +73,7 @@ public class PlaneRepository {
         planes.sort(Comparator.comparing(Plane::getId));
     }
 
-    public ArrayList<Plane> getAllPlanesOrdenados() {
+    public ArrayList<Plane> getAllPlanesSorted() {
         ArrayList<Plane> copy = new ArrayList<>();
         for (Plane p : planes) {
             copy.add(p.clone());

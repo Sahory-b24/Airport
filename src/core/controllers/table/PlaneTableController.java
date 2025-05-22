@@ -19,7 +19,7 @@ public class PlaneTableController {
     public static Response updatePlanesTable(DefaultTableModel model) {
     try {
         model.setRowCount(0);
-        ArrayList<Plane> planes = PlaneRepository.getInstance().getAllPlanes();
+        ArrayList<Plane> planes = PlaneRepository.getInstance().getAllPlanesSorted();
 
         if (planes == null || planes.isEmpty()) {
             return new Response("Plane list is empty.", Status.NO_CONTENT);
