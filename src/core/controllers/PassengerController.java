@@ -7,7 +7,11 @@ package core.controllers;
 import core.controllers.utils.Response;
 import core.controllers.utils.Status;
 import core.models.Passenger;
+import core.models.operations.DefaultPhoneNumberFormatter;
+import core.models.operations.StandarPassengerAgeCalculator;
 import core.models.storage.PassengerRepository;
+import core.models.utils.PassengerAgeCalculator;
+import core.models.utils.PhoneNumberFormatter;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 
@@ -16,13 +20,20 @@ import java.time.format.DateTimeParseException;
  * @author Sahory Blanco
  */
 public class PassengerController {
+      private static final PassengerAgeCalculator ageCalculator = new StandarPassengerAgeCalculator();
+      private static final PhoneNumberFormatter phoneFormatter = new DefaultPhoneNumberFormatter();
     public static Response createPassenger(String id,String firstname,String lastname,String birthDate,String countryPhoneCode,String phone,String country) {
         long idLong;
             int phoneCodeInt;
             long phoneLong;
             LocalDate parsedBirthDate;
+            
+            
+            
+            
         try{
             // ID
+            
             if (id == null || id.isEmpty()) {
                 return new Response("ID cannot be empty", Status.BAD_REQUEST);
             }
@@ -187,5 +198,13 @@ public class PassengerController {
         passenger.setPhone(phoneLong);
         passenger.setCountry(country.trim());
         return new Response("Passenger updated successfully", Status.OK);
+    }
+    public static int getCalculatedAgeOfPassenger(Passenger passenger) {
+        if (passenger == null) return 0;
+        return ageCalculator.calculateAge(passenger);
+    }
+    public static String getFormattedPhoneOfPassenger(Passenger passenger) {
+        if (passenger == null) return "N/A"; 
+        return phoneFormatter.formatPhoneNumber(passenger);
     }
 }

@@ -99,17 +99,10 @@ public class Passenger implements Add{
         return firstname + " " + lastname;
     }
     
-    public String generateFullPhone() {
-        return "+" + countryPhoneCode + " " + phone;
-    }
-    
-    public int calculateAge() {  
-         return Period.between(birthDate, LocalDate.now()).getYears();
-    }
-    
     public int getNumFlights() {
         return flights.size();
     }
+    
     public Passenger clone() {
         Passenger copy = new Passenger(
             this.id,

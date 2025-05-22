@@ -4,6 +4,7 @@
  */
 package core.controllers.table;
 
+import core.controllers.PassengerController;
 import core.controllers.utils.Response;
 import core.controllers.utils.Status;
 import core.models.Passenger;
@@ -26,14 +27,16 @@ public class PassengerTableController {
             }
 
             for (Passenger p : passengers) {
+                int age = PassengerController.getCalculatedAgeOfPassenger(p);
+                String formattedPhone = PassengerController.getFormattedPhoneOfPassenger(p);
                 model.addRow(new Object[]{
                     p.getId(),
-                    p.getFirstname(),
-                    p.getLastname(),
+                    p.getFullname(), // Este método puede quedarse en Passenger.java
                     p.getBirthDate(),
-                    "+" + p.getCountryPhoneCode(),
-                    p.getPhone(),
-                    p.getCountry()
+                    age,
+                    formattedPhone,
+                    p.getCountry(),
+                    p.getNumFlights() // Método de Passenger.java
                 });
             }
 
