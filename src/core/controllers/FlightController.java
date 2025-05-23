@@ -155,31 +155,48 @@ public class FlightController {
             return new Response("Could not apply delay to flight " + flightId + ".", Status.BAD_REQUEST);
         }
     }
-    public static Response addPassengerToFlight(long passengerId, String flightId) {
-        if (flightId == null || flightId.trim().isEmpty()) {
-            return new Response("Flight ID is required.", Status.BAD_REQUEST);
-        }
+    public static Response addPassengerToFlight(String passengerIdStr, String flightId) {
+        try {
+            if (flightId == null || flightId.trim().isEmpty()) {
+                return new Response("Flight ID is required.", Status.BAD_REQUEST);
+            }
 
-        FlightRepository flightRepo = FlightRepository.getInstance();
-        PassengerRepository passengerRepo = PassengerRepository.getInstance();
+            long passengerId;
+            try {
+                passengerId = Long.parseLong(passengerIdStr.trim());
+            } catch (NumberFormatException e) {
+                return new Response("Passenger ID must be numeric.", Status.BAD_REQUEST);
+            }
 
-        Flight flight = flightRepo.getFlight(flightId);
-        if (flight == null) {
-            return new Response("Flight with ID " + flightId + " not found.", Status.NOT_FOUND); //
-        }
+            FlightRepository flightRepo = FlightRepository.getInstance();
+            PassengerRepository passengerRepo = PassengerRepository.getInstance();
 
-        Passenger passenger = passengerRepo.getPassenger(passengerId);
-        if (passenger == null) {
-            return new Response("Passenger with ID " + passengerId + " not found.", Status.NOT_FOUND);
-        }
+            Flight flight = flightRepo.getFlight(flightId);
+            if (flight == null) {
+                return new Response("Flight with ID " + flightId + " not found.", Status.NOT_FOUND);
+            }
 
-        if (flight.getNumPassengers() >= flight.getPlane().getMaxCapacity()) {
-            return new Response("Flight " + flightId + " has reached its maximum passenger capacity.", Status.BAD_REQUEST);
-        }
-        flight.addPassenger(passenger); 
-        passenger.addFlight(flight);    
+            Passenger passenger = passengerRepo.getPassenger(passengerId);
+            if (passenger == null) {
+                return new Response("Passenger with ID " + passengerId + " not found.", Status.NOT_FOUND);
+            }
 
-        return new Response("Passenger " + passengerId + " added to flight " + flightId + " successfully.", Status.OK, flight.clone()); //
+            if (flight.getNumPassengers() >= flight.getPlane().getMaxCapacity()) {
+                return new Response("Flight " + flightId + " has reached its maximum passenger capacity.", Status.BAD_REQUEST);
+            }
+
+            if (passenger.getFlights().contains(flight)) {
+                return new Response("Passenger is already assigned to this flight.", Status.BAD_REQUEST);
+            }
+
+            flight.addPassenger(passenger);
+            passenger.addFlight(flight);
+
+            return new Response("Passenger " + passengerId + " added to flight " + flightId + " successfully.", Status.OK, flight.clone());
+
+        } catch (Exception e) {
+            return new Response("Unexpected error: " + e.getMessage(), Status.INTERNAL_SERVER_ERROR);
+        } //
     }
     public static Response getFlightsForPassenger(long passengerId) {
         PassengerRepository passengerRepo = PassengerRepository.getInstance();
@@ -199,22 +216,22 @@ public class FlightController {
         return new Response("Flights for passenger " + passengerId + " retrieved.", Status.OK, flightClones);
     }
     public static Response getAllFlightsSortedByDate() {
-    FlightRepository flightRepo = FlightRepository.getInstance();
-    // Llamar al método del repositorio que ya ordena por fecha
-    List<Flight> flights = flightRepo.getAllFlightsSorted(); // <-- CAMBIO AQUÍ
+        FlightRepository flightRepo = FlightRepository.getInstance();
+        // Llamar al método del repositorio que ya ordena por fecha
+        List<Flight> flights = flightRepo.getAllFlightsSorted(); // <-- CAMBIO AQUÍ
 
-    // El resto del método (crear clones, empaquetar en Response) permanece igual
-    // ya no necesitas: flights.sort(Comparator.comparing(Flight::getDepartureDate));
+        // El resto del método (crear clones, empaquetar en Response) permanece igual
+        // ya no necesitas: flights.sort(Comparator.comparing(Flight::getDepartureDate));
 
-    List<Flight> flightClones = new ArrayList<>();
-    for (Flight f : flights) {
-        flightClones.add(f.clone());
+        List<Flight> flightClones = new ArrayList<>();
+        for (Flight f : flights) {
+            flightClones.add(f.clone());
+        }
+        if (flightClones.isEmpty()) {
+            return new Response("No flights found.", Status.NO_CONTENT);
+        }
+        return new Response("Flights retrieved successfully.", Status.OK, flightClones);
     }
-    if (flightClones.isEmpty()) {
-        return new Response("No flights found.", Status.NO_CONTENT);
-    }
-    return new Response("Flights retrieved successfully.", Status.OK, flightClones);
-}
     public static LocalDateTime getCalculatedArrivalDateForFlight(Flight flight) {
         if (flight == null) {
             return null;

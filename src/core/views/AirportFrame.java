@@ -4,6 +4,7 @@
  */
 package core.views;
 
+import core.controllers.FlightController;
 import core.models.Location;
 import core.models.Flight;
 import core.models.Passenger;
@@ -1659,26 +1660,18 @@ public class AirportFrame extends javax.swing.JFrame {
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
         // TODO add your handling code here:
-        long passengerId = Long.parseLong(txtIDAdd.getText());
-        String flightId = comboBoxFlightAdd.getItemAt(comboBoxFlightAdd.getSelectedIndex());
+        String passengerId = txtIDAdd.getText();
+        String flightId = comboBoxFlightAdd.getSelectedItem().toString();
 
-        Passenger passenger = null;
-        Flight flight = null;
+        Response response = FlightController.addPassengerToFlight(passengerId, flightId);
 
-        for (Passenger p : this.passengers) {
-            if (p.getId() == passengerId) {
-                passenger = p;
-            }
+        if (response.getStatus() >= 500) {
+            JOptionPane.showMessageDialog(this, response.getMessage(), "Error " + response.getStatus(), JOptionPane.ERROR_MESSAGE);
+        } else if (response.getStatus() >= 400) {
+            JOptionPane.showMessageDialog(this, response.getMessage(), "Error " + response.getStatus(), JOptionPane.WARNING_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(this, response.getMessage(), "Success", JOptionPane.INFORMATION_MESSAGE);
         }
-
-        for (Flight f : this.flights) {
-            if (flightId.equals(f.getId())) {
-                flight = f;
-            }
-        }
-
-        passenger.addFlight(flight);
-        flight.addPassenger(passenger);
     }//GEN-LAST:event_btnAddActionPerformed
 
     private void btnDelayDelayFlightActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDelayDelayFlightActionPerformed
@@ -1699,18 +1692,29 @@ public class AirportFrame extends javax.swing.JFrame {
 
     private void btnRefreshShowMyFlightsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRefreshShowMyFlightsActionPerformed
         // TODO add your handling code here:
-        long passengerId = Long.parseLong(userSelect.getItemAt(userSelect.getSelectedIndex()));
+        String selected = userSelect.getSelectedItem().toString();
 
-        Passenger passenger = null;
-        for (Passenger p : this.passengers) {
-            if (p.getId() == passengerId) {
-                passenger = p;
-            }
+        Response response = FlightTableController.updateMyFlightsTable(selected, (DefaultTableModel) tableShowMyFlights.getModel());
+
+        if (response.getStatus() >= 500) {
+            JOptionPane.showMessageDialog(this, response.getMessage(), "Error " + response.getStatus(), JOptionPane.ERROR_MESSAGE);
+        } else if (response.getStatus() >= 400) {
+            JOptionPane.showMessageDialog(this, response.getMessage(), "Error " + response.getStatus(), JOptionPane.WARNING_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(this, response.getMessage(), "Success", JOptionPane.INFORMATION_MESSAGE);
         }
-
-        ArrayList<Flight> flights = passenger.getFlights();
-        DefaultTableModel model = (DefaultTableModel) tableShowMyFlights.getModel();
-        model.setRowCount(0);
+//        long passengerId = Long.parseLong(userSelect.getItemAt(userSelect.getSelectedIndex()));
+//
+//        Passenger passenger = null;
+//        for (Passenger p : this.passengers) {
+//            if (p.getId() == passengerId) {
+//                passenger = p;
+//            }
+//        }
+//
+//        ArrayList<Flight> flights = passenger.getFlights();
+//        DefaultTableModel model = (DefaultTableModel) tableShowMyFlights.getModel();
+//        model.setRowCount(0);
 //        for (Flight flight : flights) {
 //            model.addRow(new Object[]{flight.getId(), flight.getDepartureDate(), flight.calculateArrivalDate()});
 //        }

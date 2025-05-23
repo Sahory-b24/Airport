@@ -8,7 +8,9 @@ import core.controllers.FlightController;
 import core.controllers.utils.Response;
 import core.controllers.utils.Status;
 import core.models.Flight;
+import core.models.Passenger;
 import core.models.storage.FlightRepository;
+import core.models.storage.PassengerRepository;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -44,6 +46,46 @@ public class FlightTableController {
             }
 
             return new Response("Flight list updated successfully.", Status.OK);
+        } catch (Exception e) {
+            return new Response("Unexpected error: " + e.getMessage(), Status.INTERNAL_SERVER_ERROR);
+        }
+    }
+    
+    public static Response updateMyFlightsTable(String selected, DefaultTableModel model) {
+        try {
+            if (selected == null || selected.startsWith("Select")) {
+                return new Response("Please select a passenger.", Status.BAD_REQUEST);
+            }
+
+            long passengerId;
+            try {
+                passengerId = Long.parseLong(selected.split(" ")[0]);
+            } catch (NumberFormatException e) {
+                return new Response("Invalid passenger ID format.", Status.BAD_REQUEST);
+            }
+
+            Passenger passenger = PassengerRepository.getInstance().getPassenger(passengerId);
+            if (passenger == null) {
+                return new Response("Passenger not found.", Status.NOT_FOUND);
+            }
+
+            ArrayList<Flight> flights = passenger.getFlights();
+            model.setRowCount(0);
+
+            if (flights == null || flights.isEmpty()) {
+                return new Response("This passenger has no flights.", Status.NO_CONTENT);
+            }
+
+            for (Flight flight : flights) {
+                model.addRow(new Object[]{
+                    flight.getId(),
+                    flight.getDepartureDate(),
+                    flight.getMinutesDurationArrival()
+                });
+            }
+
+            return new Response("Flights loaded successfully.", Status.OK);
+
         } catch (Exception e) {
             return new Response("Unexpected error: " + e.getMessage(), Status.INTERNAL_SERVER_ERROR);
         }
