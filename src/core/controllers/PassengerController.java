@@ -13,6 +13,7 @@ import core.models.storage.PassengerRepository;
 import core.models.utils.PassengerAgeCalculator;
 import core.models.utils.PhoneNumberFormatter;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
 /**
@@ -60,7 +61,8 @@ public class PassengerController {
                 return new Response("Birth date is required", Status.BAD_REQUEST);
             }
             try {
-                parsedBirthDate = LocalDate.parse(birthDate);  // espera "YYYY-MM-DD"
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-M-d");
+                parsedBirthDate = LocalDate.parse(birthDate, formatter);  // espera "YYYY-MM-DD"
             } catch (DateTimeParseException e) {
                 return new Response("Invalid birth date. Use format YYYY-MM-DD", Status.BAD_REQUEST);
             }

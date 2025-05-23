@@ -64,6 +64,7 @@ public class AirportFrame extends javax.swing.JFrame {
         ShowJsonComboBox.loadLocations(comboBoxArrivalLocationFlightRegistration);
         ShowJsonComboBox.loadLocations(comboBoxScaleLocationFlightRegistration);
         ShowJsonComboBox.loadFlights(comboBoxFlightAdd);
+        ShowJsonComboBox.loadFlights(comboBoxIDDelayFlight);
         
     }
 
@@ -1573,52 +1574,88 @@ public class AirportFrame extends javax.swing.JFrame {
 
     private void btnCreateFlightRegistrationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreateFlightRegistrationActionPerformed
         // TODO add your handling code here:
-        String id = txtIDFlightRegistration.getText();
-        String planeId = comboBoxPlaneFlightRegistration.getItemAt(comboBoxPlaneFlightRegistration.getSelectedIndex());
-        String departureLocationId = comboBoxDepartureLocationFlightRegistration.getItemAt(comboBoxDepartureLocationFlightRegistration.getSelectedIndex());
-        String arrivalLocationId = comboBoxArrivalLocationFlightRegistration.getItemAt(comboBoxArrivalLocationFlightRegistration.getSelectedIndex());
-        String scaleLocationId = comboBoxScaleLocationFlightRegistration.getItemAt(comboBoxScaleLocationFlightRegistration.getSelectedIndex());
-        int year = Integer.parseInt(txtYearFlightRegistration.getText());
-        int month = Integer.parseInt(comboBoxMonthFlightRegistration.getItemAt(comboBoxMonthFlightRegistration.getSelectedIndex()));
-        int day = Integer.parseInt(comboBoxDayFlightRegistration.getItemAt(comboBoxDayFlightRegistration.getSelectedIndex()));
-        int hour = Integer.parseInt(comboBoxHourDepartureDateFlightRegistration.getItemAt(comboBoxHourDepartureDateFlightRegistration.getSelectedIndex()));
-        int minutes = Integer.parseInt(comboBoxMinuteDepartureDateFlightRegistration.getItemAt(comboBoxMinuteDepartureDateFlightRegistration.getSelectedIndex()));
-        int hoursDurationsArrival = Integer.parseInt(comboBoxHourArrivalLocationFlightRegistration.getItemAt(comboBoxHourArrivalLocationFlightRegistration.getSelectedIndex()));
-        int minutesDurationsArrival = Integer.parseInt(comboBoxMinuteArrivalFlightRegistration.getItemAt(comboBoxMinuteArrivalFlightRegistration.getSelectedIndex()));
-        int hoursDurationsScale = Integer.parseInt(comboBoxHourScaleLocationFlightRegistration.getItemAt(comboBoxHourScaleLocationFlightRegistration.getSelectedIndex()));
-        int minutesDurationsScale = Integer.parseInt(comboBoxMinuteScaleLocationFlightRegistration.getItemAt(comboBoxMinuteScaleLocationFlightRegistration.getSelectedIndex()));
+        String id = txtIDFlightRegistration.getText().trim();
+        String planeId = comboBoxPlaneFlightRegistration.getSelectedItem().toString();
+        String departureLocationId = comboBoxDepartureLocationFlightRegistration.getSelectedItem().toString();
+        String arrivalLocationId = comboBoxArrivalLocationFlightRegistration.getSelectedItem().toString();
+        String scaleLocationId = comboBoxScaleLocationFlightRegistration.getSelectedItem().toString(); // puede ser ""
 
-        LocalDateTime departureDate = LocalDateTime.of(year, month, day, hour, minutes);
+        String year = txtYearFlightRegistration.getText().trim();
+        String month = comboBoxMonthFlightRegistration.getSelectedItem().toString();
+        String day = comboBoxDayFlightRegistration.getSelectedItem().toString();
+        String hour = comboBoxHourDepartureDateFlightRegistration.getSelectedItem().toString();
+        String minutes = comboBoxMinuteDepartureDateFlightRegistration.getSelectedItem().toString();
 
-        Plane plane = null;
-        for (Plane p : this.planes) {
-            if (planeId.equals(p.getId())) {
-                plane = p;
-            }
-        }
+        // convertir a formato yyyy-MM-ddTHH:mm:ss como String
+        String departureDateStr = String.format("%s-%s-%s", year, month, day);
+        String departureTimeStr = String.format("%s:%s", hour, minutes);
 
-        Location departure = null;
-        Location arrival = null;
-        Location scale = null;
-        for (Location location : this.locations) {
-            if (departureLocationId.equals(location.getAirportId())) {
-                departure = location;
-            }
-            if (arrivalLocationId.equals(location.getAirportId())) {
-                arrival = location;
-            }
-            if (scaleLocationId.equals(location.getAirportId())) {
-                scale = location;
-            }
-        }
-         
-        if (scale == null) {
-            this.flights.add(new Flight(id, plane, departure, arrival, departureDate, hoursDurationsArrival, minutesDurationsArrival) {} );
+        String hoursDurationArrival = comboBoxHourArrivalLocationFlightRegistration.getSelectedItem().toString();
+        String minutesDurationArrival = comboBoxMinuteArrivalFlightRegistration.getSelectedItem().toString();
+        String hoursDurationScale = comboBoxHourScaleLocationFlightRegistration.getSelectedItem().toString();
+        String minutesDurationScale = comboBoxMinuteScaleLocationFlightRegistration.getSelectedItem().toString();
+
+        Response response = FlightController.createFlight(
+            id, planeId, departureLocationId, arrivalLocationId, scaleLocationId,
+            departureDateStr, departureTimeStr, hoursDurationArrival, minutesDurationArrival,
+            hoursDurationScale, minutesDurationScale
+        );
+        
+        if (response.getStatus() >= 500) {
+        JOptionPane.showMessageDialog(this, response.getMessage(), "Error " + response.getStatus(), JOptionPane.ERROR_MESSAGE);
+        } else if (response.getStatus() >= 400) {
+            JOptionPane.showMessageDialog(this, response.getMessage(), "Error " + response.getStatus(), JOptionPane.WARNING_MESSAGE);
         } else {
-            this.flights.add(new Flight(id, plane, departure, scale, arrival, departureDate, hoursDurationsArrival, minutesDurationsArrival, hoursDurationsScale, minutesDurationsScale) {} );
+            JOptionPane.showMessageDialog(this, response.getMessage(), "Success", JOptionPane.INFORMATION_MESSAGE);
+            // Agregar ID al combo de asignación de vuelos
+            comboBoxFlightAdd.addItem(id);
         }
-
-        this.comboBoxFlightAdd.addItem(id);
+//        String id = txtIDFlightRegistration.getText();
+//        String planeId = comboBoxPlaneFlightRegistration.getItemAt(comboBoxPlaneFlightRegistration.getSelectedIndex());
+//        String departureLocationId = comboBoxDepartureLocationFlightRegistration.getItemAt(comboBoxDepartureLocationFlightRegistration.getSelectedIndex());
+//        String arrivalLocationId = comboBoxArrivalLocationFlightRegistration.getItemAt(comboBoxArrivalLocationFlightRegistration.getSelectedIndex());
+//        String scaleLocationId = comboBoxScaleLocationFlightRegistration.getItemAt(comboBoxScaleLocationFlightRegistration.getSelectedIndex());
+//        int year = Integer.parseInt(txtYearFlightRegistration.getText());
+//        int month = Integer.parseInt(comboBoxMonthFlightRegistration.getItemAt(comboBoxMonthFlightRegistration.getSelectedIndex()));
+//        int day = Integer.parseInt(comboBoxDayFlightRegistration.getItemAt(comboBoxDayFlightRegistration.getSelectedIndex()));
+//        int hour = Integer.parseInt(comboBoxHourDepartureDateFlightRegistration.getItemAt(comboBoxHourDepartureDateFlightRegistration.getSelectedIndex()));
+//        int minutes = Integer.parseInt(comboBoxMinuteDepartureDateFlightRegistration.getItemAt(comboBoxMinuteDepartureDateFlightRegistration.getSelectedIndex()));
+//        int hoursDurationsArrival = Integer.parseInt(comboBoxHourArrivalLocationFlightRegistration.getItemAt(comboBoxHourArrivalLocationFlightRegistration.getSelectedIndex()));
+//        int minutesDurationsArrival = Integer.parseInt(comboBoxMinuteArrivalFlightRegistration.getItemAt(comboBoxMinuteArrivalFlightRegistration.getSelectedIndex()));
+//        int hoursDurationsScale = Integer.parseInt(comboBoxHourScaleLocationFlightRegistration.getItemAt(comboBoxHourScaleLocationFlightRegistration.getSelectedIndex()));
+//        int minutesDurationsScale = Integer.parseInt(comboBoxMinuteScaleLocationFlightRegistration.getItemAt(comboBoxMinuteScaleLocationFlightRegistration.getSelectedIndex()));
+//
+//        LocalDateTime departureDate = LocalDateTime.of(year, month, day, hour, minutes);
+//
+//        Plane plane = null;
+//        for (Plane p : this.planes) {
+//            if (planeId.equals(p.getId())) {
+//                plane = p;
+//            }
+//        }
+//
+//        Location departure = null;
+//        Location arrival = null;
+//        Location scale = null;
+//        for (Location location : this.locations) {
+//            if (departureLocationId.equals(location.getAirportId())) {
+//                departure = location;
+//            }
+//            if (arrivalLocationId.equals(location.getAirportId())) {
+//                arrival = location;
+//            }
+//            if (scaleLocationId.equals(location.getAirportId())) {
+//                scale = location;
+//            }
+//        }
+//         
+//        if (scale == null) {
+//            this.flights.add(new Flight(id, plane, departure, arrival, departureDate, hoursDurationsArrival, minutesDurationsArrival) {} );
+//        } else {
+//            this.flights.add(new Flight(id, plane, departure, scale, arrival, departureDate, hoursDurationsArrival, minutesDurationsArrival, hoursDurationsScale, minutesDurationsScale) {} );
+//        }
+//
+//        this.comboBoxFlightAdd.addItem(id);
     }//GEN-LAST:event_btnCreateFlightRegistrationActionPerformed
 
     private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
