@@ -14,6 +14,7 @@ import core.models.storage.PassengerRepository;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Comparator;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -69,13 +70,15 @@ public class FlightTableController {
                 return new Response("Passenger not found.", Status.NOT_FOUND);
             }
 
-            ArrayList<Flight> flights = passenger.getFlights();
-            model.setRowCount(0);
-
+            ArrayList<Flight> flights = new ArrayList<>(passenger.getFlights());
+            
             if (flights == null || flights.isEmpty()) {
                 return new Response("This passenger has no flights.", Status.NO_CONTENT);
             }
-
+            
+            flights.sort(Comparator.comparing(Flight::getDepartureDate));
+            model.setRowCount(0);
+            
             for (Flight flight : flights) {
                 model.addRow(new Object[]{
                     flight.getId(),

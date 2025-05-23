@@ -238,23 +238,7 @@ public class FlightController {
             return new Response("Unexpected error: " + e.getMessage(), Status.INTERNAL_SERVER_ERROR);
         } //
     }
-    public static Response getFlightsForPassenger(long passengerId) {
-        PassengerRepository passengerRepo = PassengerRepository.getInstance();
-        Passenger passenger = passengerRepo.getPassenger(passengerId);
-
-        if (passenger == null) {
-            return new Response("Passenger with ID " + passengerId + " not found.", Status.NOT_FOUND);
-        }
-
-        ArrayList<Flight> flights = new ArrayList<>(passenger.getFlights()); 
-        flights.sort((f1, f2) -> f1.getDepartureDate().compareTo(f2.getDepartureDate()));
-
-        List<Flight> flightClones = new ArrayList<>();
-        for (Flight f : flights) {
-            flightClones.add(f.clone()); //
-        }
-        return new Response("Flights for passenger " + passengerId + " retrieved.", Status.OK, flightClones);
-    }
+    
     public static Response getAllFlightsSortedByDate() {
         FlightRepository flightRepo = FlightRepository.getInstance();
         // Llamar al método del repositorio que ya ordena por fecha
