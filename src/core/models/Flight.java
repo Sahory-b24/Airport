@@ -114,7 +114,7 @@ public class Flight {
         if (scaleLocation != null) {
             copy = new Flight(
                 this.id,
-                this.plane, // se puede usar plane.clone() si quieres copia más segura
+                this.plane, 
                 this.departureLocation,
                 this.scaleLocation,
                 this.arrivalLocation,
@@ -136,9 +136,9 @@ public class Flight {
             );
         }
 
-         //Clonamos la lista de pasajeros (referencias, no deep copy)
+         //Clonamos la lista de pasajeros 
         for (Passenger p : this.passengers) {
-            copy.addPassenger(p); // puedes usar p.clone() si quieres copia completa
+            copy.addPassenger(p);
         }
         
 

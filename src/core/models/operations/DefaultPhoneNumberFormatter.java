@@ -15,9 +15,8 @@ public class DefaultPhoneNumberFormatter implements PhoneNumberFormatter{
  @Override
     public String formatPhoneNumber(Passenger passenger) {
         if (passenger == null) {
-            return "N/A"; // O manejarlo de otra forma
+            return "N/A";
         }
-        // Asumimos que Passenger tiene getCountryPhoneCode() y getPhone()
         return "+" + passenger.getCountryPhoneCode() + " " + passenger.getPhone();
     }
 }

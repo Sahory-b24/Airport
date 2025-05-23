@@ -27,7 +27,7 @@ import org.json.JSONTokener;
  * @author Sahory Blanco
  */
 public class LoadDataJson {
-    //metodo que carga los datos de los json
+ 
     public void loadAllData() {
         loadLocations("json/locations.json"); 
         loadPlanes("json/planes.json");       
@@ -74,8 +74,7 @@ public class LoadDataJson {
                 String airline = obj.getString("airline");
 
                 Plane plane = new Plane(id, brand, model, maxCapacity, airline);
-                // Asegúrate de que PlaneRepository exista y tenga el método addPlane
-                if (planeRepo != null) { // Solo para evitar NullPointerException si aún no lo has creado
+                if (planeRepo != null) {
                     planeRepo.addPlane(plane);
                 } else {
                     System.err.println("PlaneRepository is null. Cannot add plane.");
