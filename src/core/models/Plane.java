@@ -70,9 +70,9 @@ public class Plane implements Add{
             this.airline
         );
 
-        // Copiar las referencias de vuelos (no deep clone para evitar ciclos)
+        // Copiar las referencias de vuelos 
         for (Flight f : this.flights) {
-            copy.addFlight(f); // O usa f.clone() si sabes que es seguro
+            copy.addFlight(f); 
         }
 
         return copy;

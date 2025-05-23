@@ -114,9 +114,9 @@ public class Passenger implements Add{
             this.country
         );
 
-        // Clonamos la lista de vuelos (referencias, no copias profundas)
+        // Clonamos la lista de vuelos
         for (Flight f : this.flights) {
-               copy.addFlight(f); // si Flight también implementa clone()
+               copy.addFlight(f); 
         }
 
         return copy;

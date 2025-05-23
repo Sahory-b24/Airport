@@ -16,7 +16,7 @@ public class SimpleFlightDelay  implements FlightDelay {
 
     @Override
     public boolean applyDelay(Flight flight, int hours, int minutes) {
-         if (flight == null || (hours == 0 && minutes == 0)) { // Validación 
+         if (flight == null || (hours == 0 && minutes == 0)) { 
             return false;
         }
         LocalDateTime newDepartureDate = flight.getDepartureDate().plusHours(hours).plusMinutes(minutes);

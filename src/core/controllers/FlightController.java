@@ -30,7 +30,6 @@ import java.util.regex.Pattern;
  * @author Sahory Blanco
  */
 public class FlightController {
- // Instantiate strategies directly. In a larger system, they might be injected.
     private static final FlightArrivalCalculator arrivalCalculator = new StandardFlightArrivalCalculator();
     private static final FlightDelay delayStrategy = new SimpleFlightDelay();
     private static final Pattern FLIGHT_ID_PATTERN = Pattern.compile("[A-Z]{3}\\d{3}");
@@ -236,7 +235,7 @@ public class FlightController {
 
         } catch (Exception e) {
             return new Response("Unexpected error: " + e.getMessage(), Status.INTERNAL_SERVER_ERROR);
-        } //
+        } 
     }
     public static Response getFlightsForPassenger(long passengerId) {
         PassengerRepository passengerRepo = PassengerRepository.getInstance();
@@ -257,12 +256,7 @@ public class FlightController {
     }
     public static Response getAllFlightsSortedByDate() {
         FlightRepository flightRepo = FlightRepository.getInstance();
-        // Llamar al método del repositorio que ya ordena por fecha
-        List<Flight> flights = flightRepo.getAllFlightsSorted(); // <-- CAMBIO AQUÍ
-
-        // El resto del método (crear clones, empaquetar en Response) permanece igual
-        // ya no necesitas: flights.sort(Comparator.comparing(Flight::getDepartureDate));
-
+        List<Flight> flights = flightRepo.getAllFlightsSorted();
         List<Flight> flightClones = new ArrayList<>();
         for (Flight f : flights) {
             flightClones.add(f.clone());
