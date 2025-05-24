@@ -1634,6 +1634,7 @@ public class AirportFrame extends javax.swing.JFrame {
             // Agregar ID al combo de asignación de vuelos
             comboBoxFlightAdd.addItem(id);
         }
+        ShowJsonComboBox.loadFlights(comboBoxIDDelayFlight);
 
     }//GEN-LAST:event_btnCreateFlightRegistrationActionPerformed
 

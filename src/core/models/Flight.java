@@ -35,9 +35,10 @@ public class Flight {
         this.departureDate = departureDate;
         this.hoursDurationArrival = hoursDurationArrival;
         this.minutesDurationArrival = minutesDurationArrival;
+        this.scaleLocation = null;
         this.hoursDurationScale = 0;
         this.minutesDurationScale = 0;
-        this.plane.addFlight(this);
+        
     }
 
     public Flight(String id, Plane plane, Location departureLocation, Location scaleLocation, Location arrivalLocation, LocalDateTime departureDate, int hoursDurationArrival, int minutesDurationArrival, int hoursDurationScale, int minutesDurationScale) {
@@ -52,7 +53,7 @@ public class Flight {
         this.minutesDurationArrival = minutesDurationArrival;
         this.hoursDurationScale = hoursDurationScale;
         this.minutesDurationScale = minutesDurationScale;
-        this.plane.addFlight(this);
+       
     }
       public void addPassenger(Passenger passenger) {
         this.passengers.add(passenger);
@@ -109,39 +110,25 @@ public class Flight {
     @Override
     public Flight clone() {
         Flight copy;
-
-        // Verificamos si tiene escala
         if (scaleLocation != null) {
             copy = new Flight(
-                this.id,
-                this.plane, 
-                this.departureLocation,
-                this.scaleLocation,
-                this.arrivalLocation,
-                this.departureDate,
-                this.hoursDurationArrival,
-                this.minutesDurationArrival,
-                this.hoursDurationScale,
-                this.minutesDurationScale
+                this.id, this.plane, this.departureLocation, this.scaleLocation, this.arrivalLocation,
+                this.departureDate, this.hoursDurationArrival, this.minutesDurationArrival,
+                this.hoursDurationScale, this.minutesDurationScale
             );
         } else {
             copy = new Flight(
-                this.id,
-                this.plane,
-                this.departureLocation,
-                this.arrivalLocation,
-                this.departureDate,
-                this.hoursDurationArrival,
-                this.minutesDurationArrival
+                this.id, this.plane, this.departureLocation, this.arrivalLocation,
+                this.departureDate, this.hoursDurationArrival, this.minutesDurationArrival
             );
         }
-
-         //Clonamos la lista de pasajeros 
-        for (Passenger p : this.passengers) {
-            copy.addPassenger(p);
+        // Clonar la lista de pasajeros para el nuevo objeto Flight
+        if (this.passengers != null) {
+            for (Passenger p : this.passengers) {
+                copy.addPassenger(p.clone()); 
+            }
         }
-        
-
         return copy;
     }
+
 }

@@ -31,7 +31,8 @@ public class PlaneTableController {
                 p.getBrand(),
                 p.getModel(),
                 p.getMaxCapacity(),
-                p.getAirline()
+                p.getAirline(),
+                p.getNumFlights()
             });
         }
 

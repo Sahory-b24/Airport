@@ -70,7 +70,7 @@ public class Plane implements Add{
             this.airline
         );
 
-        // Copiar las referencias de vuelos 
+//         Copiar las referencias de vuelos 
         for (Flight f : this.flights) {
             copy.addFlight(f); 
         }

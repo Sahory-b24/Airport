@@ -25,7 +25,7 @@ public class ShowJsonComboBox {
         model.addElement("Select a user");
 
         for (Passenger p : PassengerRepository.getInstance().getAllPassengers()) {
-//            String label = p.getId() + " - " + p.getFirstname() + " " + p.getLastname();
+
             model.addElement(String.valueOf(p.getId()));
         }
 
@@ -47,7 +47,7 @@ public class ShowJsonComboBox {
         model.addElement("Select a plane");
 
         for (Plane plane : PlaneRepository.getInstance().getAllPlanes()) {
-//            String label = plane.getId() + " - " + plane.getBrand() + " " + plane.getModel() + " - " + plane.getAirline();
+
             model.addElement(plane.getId());
         }
 
