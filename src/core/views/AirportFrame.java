@@ -41,18 +41,9 @@ public class AirportFrame extends javax.swing.JFrame {
      * Creates new form AirportFrame
      */
     private int x, y;
-    private ArrayList<Passenger> passengers;
-    private ArrayList<Plane> planes;
-    private ArrayList<Location> locations;
-    private ArrayList<Flight> flights;
 
     public AirportFrame() {
         initComponents();
-
-        this.passengers = new ArrayList<>();
-        this.planes = new ArrayList<>();
-        this.locations = new ArrayList<>();
-        this.flights = new ArrayList<>();
 
         this.setBackground(new Color(0, 0, 0, 0));
         this.setLocationRelativeTo(null);
@@ -70,7 +61,7 @@ public class AirportFrame extends javax.swing.JFrame {
         ShowJsonComboBox.loadLocations(comboBoxScaleLocationFlightRegistration);
         ShowJsonComboBox.loadFlights(comboBoxFlightAdd);
         ShowJsonComboBox.loadFlights(comboBoxIDDelayFlight);
-        
+        comboBoxScaleLocationFlightRegistration.addItem("None");
         TableObserverController observerPassenger = new TableObserverController(() -> {
         PassengerTableController.updatePassengersTable((DefaultTableModel) tableShowAllPassengers.getModel());
         });
@@ -645,6 +636,11 @@ public class AirportFrame extends javax.swing.JFrame {
 
         comboBoxScaleLocationFlightRegistration.setFont(new java.awt.Font("Yu Gothic UI", 0, 18)); // NOI18N
         comboBoxScaleLocationFlightRegistration.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Location" }));
+        comboBoxScaleLocationFlightRegistration.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                comboBoxScaleLocationFlightRegistrationActionPerformed(evt);
+            }
+        });
 
         jLabel27.setFont(new java.awt.Font("Yu Gothic UI", 0, 18)); // NOI18N
         jLabel27.setText("Duration:");
@@ -1834,6 +1830,11 @@ public class AirportFrame extends javax.swing.JFrame {
     private void txtYearFlightRegistrationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtYearFlightRegistrationActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtYearFlightRegistrationActionPerformed
+
+    private void comboBoxScaleLocationFlightRegistrationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboBoxScaleLocationFlightRegistrationActionPerformed
+
+        // TODO add your handling code here:
+    }//GEN-LAST:event_comboBoxScaleLocationFlightRegistrationActionPerformed
 
     /**
      * @param args the command line arguments

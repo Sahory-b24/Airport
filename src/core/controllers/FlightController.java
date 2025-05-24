@@ -16,6 +16,7 @@ import core.models.storage.FlightRepository;
 import core.models.storage.LocationRepository;
 import core.models.storage.PassengerRepository;
 import core.models.storage.PlaneRepository;
+import core.models.utils.Add;
 import core.models.utils.FlightArrivalCalculator;
 import core.models.utils.FlightDelay;
 import java.time.LocalDateTime;
@@ -37,121 +38,176 @@ public class FlightController {
 
     public static Response createFlight(
         String id,
-        String planeId,
-        String departureLocationId,
-        String arrivalLocationId,
-        String scaleLocationId,
-        String departureDateStr,
-        String departureTimeStr,
-        String hoursDurationArrival,
-        String minutesDurationArrival,
-        String hoursDurationScale,
-        String minutesDurationScale
-    ) {
-        try {
-            if (id == null || !FLIGHT_ID_PATTERN.matcher(id).matches()) {
-                return new Response("Invalid flight ID. Must be 3 uppercase letters followed by 3 digits (e.g. ABC123).", Status.BAD_REQUEST);
-            }
-            if (planeId == null || planeId.trim().isEmpty() ||
-                departureLocationId == null || departureLocationId.trim().isEmpty() ||
-                arrivalLocationId == null || arrivalLocationId.trim().isEmpty() ||
-                departureDateStr == null || departureDateStr.trim().isEmpty()) {
-                return new Response("Plane, locations and departure date are required.", Status.BAD_REQUEST);
-            }
-            boolean hasScale = scaleLocationId != null && !scaleLocationId.trim().isEmpty();
-            int hArr, mArr, hScale, mScale;
-            try {
-                hArr = Integer.parseInt(hoursDurationArrival);
-                mArr = Integer.parseInt(minutesDurationArrival);
-                hScale = Integer.parseInt(hoursDurationScale);
-                mScale = Integer.parseInt(minutesDurationScale);
-            } catch (NumberFormatException e) {
-                return new Response("Duration times must be numeric.", Status.BAD_REQUEST);
-            }
+    String planeId,
+    String departureLocationId,
+    String arrivalLocationId,
+    String scaleLocationId,
+    String departureDateStr,
+    String departureTimeStr, 
+    String hoursDurationArrival,
+    String minutesDurationArrival,
+    String hoursDurationScale,
+    String minutesDurationScale
+) {
+    try {
 
-            long totalMinutes = hArr * 60L + mArr;
-            if (hasScale) totalMinutes += hScale * 60L + mScale;
-
-            if (totalMinutes <= 0) {
-                return new Response("Total flight time must be greater than 00:00.", Status.BAD_REQUEST);
-            }
-
-            if (!hasScale && (hScale > 0 || mScale > 0)) {
-                return new Response("Scale time must be 0 if there is no scale location.", Status.BAD_REQUEST);
-            }
-            LocalDateTime departureDate;
-            try {
-                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-M-d'T'H:m");
-                departureDate = LocalDateTime.parse(departureDateStr + "T" + departureTimeStr, formatter);
-
-                if (departureDate.isBefore(LocalDateTime.now())) {
-                    return new Response("La fecha de salida debe ser futura o actual.", Status.BAD_REQUEST);
-                }
-            } catch (DateTimeParseException e) {
-                return new Response("Formato de fecha u hora inválido. Usa YYYY-MM-DD y HH:mm.", Status.BAD_REQUEST);
-            }
-            int hoursArrival, minutesArrival;
-            try {
-                hoursArrival = Integer.parseInt(hoursDurationArrival);
-                minutesArrival = Integer.parseInt(minutesDurationArrival);
-                if (hoursArrival < 0 || minutesArrival < 0 || minutesArrival > 59) {
-                    return new Response("Duración de llegada inválida.", Status.BAD_REQUEST);
-                }
-                if (hoursArrival == 0 && minutesArrival == 0) {
-                    return new Response("La duración de llegada no puede ser cero.", Status.BAD_REQUEST);
-                }
-            } catch (NumberFormatException e) {
-                return new Response("La duración de llegada debe ser numérica.", Status.BAD_REQUEST);
-            }
-            FlightRepository flightRepo = FlightRepository.getInstance();
-            PlaneRepository planeRepo = PlaneRepository.getInstance();
-            LocationRepository locationRepo = LocationRepository.getInstance();
-            if (flightRepo.getFlight(id) != null) {
-                return new Response("Flight with ID " + id + " already exists.", Status.BAD_REQUEST);
-            }
-            Plane plane = planeRepo.getPlane(planeId);
-            if (plane == null) {
-                return new Response("Plane not found.", Status.NOT_FOUND);
-            }
-            Location departureLoc = locationRepo.getLocation(departureLocationId);
-            Location arrivalLoc = locationRepo.getLocation(arrivalLocationId);
-            if (departureLoc == null || arrivalLoc == null) {
-                return new Response("Departure or arrival location not found.", Status.NOT_FOUND);
-            }
-            if (departureLoc.equals(arrivalLoc)) {
-                return new Response("Departure and arrival locations must be different.", Status.BAD_REQUEST);
-            }
-            Location scaleLoc = null;
-            if (hasScale) {
-                scaleLoc = locationRepo.getLocation(scaleLocationId);
-                if (scaleLoc == null) {
-                    return new Response("Scale location not found.", Status.NOT_FOUND);
-                }
-                if (scaleLoc.equals(departureLoc) || scaleLoc.equals(arrivalLoc)) {
-                    return new Response("Scale location must be different from departure and arrival.", Status.BAD_REQUEST);
-                }
-            }
-
-            // Crear vuelo
-            Flight flight;
-            if (hasScale) {
-                flight = new Flight(id, plane, departureLoc, scaleLoc, arrivalLoc, departureDate,
-                                    hArr, mArr, hScale, mScale);
-            } else {
-                flight = new Flight(id, plane, departureLoc, arrivalLoc, departureDate,
-                                    hArr, mArr);
-            }
-
-            if (flightRepo.addFlight(flight)) {
-                return new Response("Flight created successfully.", Status.CREATED, flight.clone());
-            } else {
-                return new Response("Failed to save flight.", Status.INTERNAL_SERVER_ERROR);
-            }
-
-        } catch (Exception e) {
-            return new Response("Unexpected error: " + e.getMessage(), Status.INTERNAL_SERVER_ERROR);
+        if (id == null || !FLIGHT_ID_PATTERN.matcher(id.trim()).matches()) { 
+            return new Response("Invalid flight ID. Must be 3 uppercase letters followed by 3 digits (e.g. ABC123).", Status.BAD_REQUEST);
         }
+        id = id.trim(); // Usar el ID sin espacios extra
+
+      
+        if (planeId == null || planeId.trim().isEmpty() ||
+            departureLocationId == null || departureLocationId.trim().isEmpty() ||
+            arrivalLocationId == null || arrivalLocationId.trim().isEmpty() ||
+            departureDateStr == null || departureDateStr.trim().isEmpty() ||
+            departureTimeStr == null || departureTimeStr.trim().isEmpty()) {
+            return new Response("Flight ID, Plane, Departure/Arrival Locations, Departure Date and Time are required.", Status.BAD_REQUEST);
+        }
+
+        boolean hasScale = scaleLocationId != null && !scaleLocationId.trim().isEmpty() && !scaleLocationId.equalsIgnoreCase("Location") && !scaleLocationId.equalsIgnoreCase("None");
+        int hArr, mArr, hScale = 0, mScale = 0; 
+       try {
+            hArr = Integer.parseInt(hoursDurationArrival.trim());
+            mArr = Integer.parseInt(minutesDurationArrival.trim());
+            if (hArr < 0 || mArr < 0 || mArr > 59) {
+                return new Response("Invalid arrival duration values (Hours >=0, 0 <= Minutes <= 59).", Status.BAD_REQUEST);
+            }
+            if (hArr == 0 && mArr == 0) {
+                 return new Response("Arrival duration cannot be zero.", Status.BAD_REQUEST);
+            }
+
+            // Parseo y validación de duración de escala 
+            if (hasScale) {
+                // Si hay una escala seleccionada, las duraciones deben ser números válidos.
+                if (hoursDurationScale == null || hoursDurationScale.trim().isEmpty() ||
+                    minutesDurationScale == null || minutesDurationScale.trim().isEmpty()) {
+                    return new Response("Scale duration (hours and minutes) must be provided if a scale location is selected.", Status.BAD_REQUEST);
+                }
+                hScale = Integer.parseInt(hoursDurationScale.trim());
+                mScale = Integer.parseInt(minutesDurationScale.trim());
+                if (hScale < 0 || mScale < 0 || mScale > 59) {
+                    return new Response("Invalid scale duration values (Hours >=0, 0 <= Minutes <= 59).", Status.BAD_REQUEST);
+                }
+            } else {
+                // si hasScale es false
+                int tempHScaleProvided, tempMScaleProvided;
+                try {
+                    //se valida que no pueden estar vacios 
+                    if (hoursDurationScale == null || hoursDurationScale.trim().isEmpty() ||
+                        minutesDurationScale == null || minutesDurationScale.trim().isEmpty()) {
+                        return new Response("If no scale location is selected, scale duration hours and minutes must be explicitly set to '0'. Cannot be empty.", Status.BAD_REQUEST);
+                    }
+                    tempHScaleProvided = Integer.parseInt(hoursDurationScale.trim());
+                    tempMScaleProvided = Integer.parseInt(minutesDurationScale.trim());
+                } catch (NumberFormatException e) {
+                    return new Response("Scale duration (hours and minutes), if provided without a scale location, must be 0", Status.BAD_REQUEST);
+                }
+
+                // Ahora validamos que esos valores parseados sean 0
+                if (tempHScaleProvided != 0 || tempMScaleProvided != 0) {
+                    return new Response("If no scale location is selected, scale duration hours and minutes must both be 0.", Status.BAD_REQUEST);
+                }
+            }
+        } catch (NumberFormatException e) {
+
+            return new Response("Arrival duration (hours and minutes) must be numeric.", Status.BAD_REQUEST);
+        }
+
+        long totalMinutes = hArr * 60L + mArr;
+        if (hasScale) { // Solo sumar duración de escala si efectivamente hay una escala.
+            totalMinutes += hScale * 60L + mScale;
+        }
+        if (totalMinutes <= 0) {
+            return new Response("Total flight time must be greater than 00:00.", Status.BAD_REQUEST);
+        }
+
+        if (!hasScale && (hScale > 0 || mScale > 0)) {
+            return new Response("Scale time must be 0 if there is no scale location.", Status.BAD_REQUEST);
+        }
+
+        LocalDateTime departureDate;
+        try {
+
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-M-d'T'H:m");
+            departureDate = LocalDateTime.parse(departureDateStr.trim() + "T" + departureTimeStr.trim(), formatter);
+
+            if (departureDate.isBefore(LocalDateTime.now())) {
+                return new Response("Departure date must be in the future or current time.", Status.BAD_REQUEST);
+            }
+        } catch (DateTimeParseException e) {
+            return new Response("Invalid Date or Time format. Use YYYY-MM-DD and HH:mm.", Status.BAD_REQUEST);
+        }
+
+
+        if (hArr < 0 || mArr < 0 || mArr > 59) { 
+            return new Response("Invalid arrival duration values (Hours >=0, 0 <= Minutes <= 59).", Status.BAD_REQUEST);
+        }
+        if (hasScale && (hScale < 0 || mScale < 0 || mScale > 59)) { 
+            return new Response("Invalid scale duration values (Hours >=0, 0 <= Minutes <= 59).", Status.BAD_REQUEST);
+        }
+
+        FlightRepository flightRepo = FlightRepository.getInstance();
+        PlaneRepository planeRepo = PlaneRepository.getInstance();
+        LocationRepository locationRepo = LocationRepository.getInstance();
+
+        if (flightRepo.getFlight(id) != null) {
+            return new Response("Flight with ID " + id + " already exists.", Status.BAD_REQUEST);
+        }
+
+        Plane plane = planeRepo.getPlane(planeId.trim());
+        if (plane == null) {
+            return new Response("Plane with ID '" + planeId.trim() + "' not found.", Status.NOT_FOUND);
+        }
+
+        Location departureLoc = locationRepo.getLocation(departureLocationId.trim());
+        Location arrivalLoc = locationRepo.getLocation(arrivalLocationId.trim());
+        if (departureLoc == null) {
+            return new Response("Departure location with ID '" + departureLocationId.trim() + "' not found.", Status.NOT_FOUND);
+        }
+        if (arrivalLoc == null) {
+            return new Response("Arrival location with ID '" + arrivalLocationId.trim() + "' not found.", Status.NOT_FOUND);
+        }
+
+        if (departureLoc.getAirportId().equals(arrivalLoc.getAirportId())) { // Comparar por ID
+            return new Response("Departure and arrival locations must be different.", Status.BAD_REQUEST);
+        }
+
+        Location scaleLoc = null;
+        if (hasScale) {
+            scaleLoc = locationRepo.getLocation(scaleLocationId.trim());
+            if (scaleLoc == null) {
+                return new Response("Scale location with ID '" + scaleLocationId.trim() + "' not found.", Status.NOT_FOUND);
+            }
+            // Escala no puede ser igual a salida o llegada.
+            if (scaleLoc.getAirportId().equals(departureLoc.getAirportId()) || scaleLoc.getAirportId().equals(arrivalLoc.getAirportId())) {
+                return new Response("Scale location must be different from departure and arrival.", Status.BAD_REQUEST);
+            }
+        }
+
+        // CREAR VUELO
+        Flight flight;
+        if (hasScale) {
+            flight = new Flight(id, plane, departureLoc, scaleLoc, arrivalLoc, departureDate,
+                                hArr, mArr, hScale, mScale);
+        } else {
+            flight = new Flight(id, plane, departureLoc, arrivalLoc, departureDate,
+                                hArr, mArr);
+        }
+
+        if (flightRepo.addFlight(flight)) {
+
+            return new Response("Flight created successfully.", Status.CREATED, flight.clone());
+        } else {
+
+            return new Response("Failed to save flight. ID might already exist.", Status.INTERNAL_SERVER_ERROR);
+        }
+
+    } catch (Exception e) {
+        e.printStackTrace(); 
+        return new Response("Unexpected error creating flight: " + e.getMessage(), Status.INTERNAL_SERVER_ERROR);
     }
+}
 
     
     public static Response delayFlight(String flightId, String hoursStr, String minutesStr) {

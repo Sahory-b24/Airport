@@ -35,7 +35,8 @@ public class Flight {
         this.departureDate = departureDate;
         this.hoursDurationArrival = hoursDurationArrival;
         this.minutesDurationArrival = minutesDurationArrival;
-        
+        this.hoursDurationScale = 0;
+        this.minutesDurationScale = 0;
         this.plane.addFlight(this);
     }
 
@@ -51,7 +52,6 @@ public class Flight {
         this.minutesDurationArrival = minutesDurationArrival;
         this.hoursDurationScale = hoursDurationScale;
         this.minutesDurationScale = minutesDurationScale;
-        
         this.plane.addFlight(this);
     }
       public void addPassenger(Passenger passenger) {
