@@ -7,6 +7,7 @@ package core.controllers;
 import core.controllers.utils.Response;
 import core.controllers.utils.Status;
 import core.models.Plane;
+import core.models.storage.PlaneRepository;
 
 /**
  *
@@ -49,13 +50,13 @@ public class PlaneController {
         }
 
         // Verificación de duplicado
-//        PlaneRepository repo = PlaneRepository.getInstance();
-//        if (repo.exists(id)) {
-//            return new Response("Plane with that ID already exists", Status.BAD_REQUEST);
-//        }
+        PlaneRepository repo = PlaneRepository.getInstance();
+        if (repo.getPlane(id) != null) {
+            return new Response("Plane with that ID already exists", Status.BAD_REQUEST);
+        }
 
         Plane plane = new Plane(id.trim(), brand.trim(), model.trim(), capacity, airline.trim());
-//        repo.add(plane);
+        repo.addPlane(plane);
 
         return new Response("Plane registered successfully", Status.CREATED);
     }

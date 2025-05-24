@@ -16,8 +16,13 @@ import core.controllers.table.FlightTableController;
 import core.controllers.table.LocationTableController;
 import core.controllers.table.PassengerTableController;
 import core.controllers.table.PlaneTableController;
+import core.controllers.table.TableObserverController;
 import core.controllers.utils.Response;
 import core.models.loadData.ShowJsonComboBox;
+import core.models.storage.FlightRepository;
+import core.models.storage.LocationRepository;
+import core.models.storage.PassengerRepository;
+import core.models.storage.PlaneRepository;
 import java.awt.Color;
 import java.time.DateTimeException;
 import java.time.LocalDate;
@@ -66,6 +71,31 @@ public class AirportFrame extends javax.swing.JFrame {
         ShowJsonComboBox.loadFlights(comboBoxFlightAdd);
         ShowJsonComboBox.loadFlights(comboBoxIDDelayFlight);
         
+        TableObserverController observerPassenger = new TableObserverController(() -> {
+        PassengerTableController.updatePassengersTable((DefaultTableModel) tableShowAllPassengers.getModel());
+        });
+        PassengerRepository.getInstance().addObserver(observerPassenger);
+        
+        TableObserverController observerPlane = new TableObserverController(() -> {
+        PlaneTableController.updatePlanesTable((DefaultTableModel) tableShowAllPlanes.getModel());
+        });
+        PlaneRepository.getInstance().addObserver(observerPlane);
+        
+        TableObserverController observerLocation = new TableObserverController(() -> {
+        LocationTableController.updateLocationsTable((DefaultTableModel) tableShowAllLocations.getModel());
+        });
+        LocationRepository.getInstance().addObserver(observerLocation);
+        
+        TableObserverController observerFlight = new TableObserverController(() -> {
+        FlightTableController.updateFlightsTable((DefaultTableModel) tableShowAllFlights.getModel());
+        });
+        FlightRepository.getInstance().addObserver(observerFlight);
+        
+        
+        TableObserverController observerShowMyFlight = new TableObserverController(() -> {
+        FlightTableController.updateMyFlightsTable( userSelect.getSelectedItem().toString(), (DefaultTableModel) tableShowMyFlights.getModel());
+        });
+        FlightRepository.getInstance().addObserver(observerShowMyFlight);
     }
 
     private void blockPanels() {

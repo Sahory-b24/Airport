@@ -13,7 +13,7 @@ import java.util.List;
  *
  * @author Sahory Blanco
  */
-public class PlaneRepository {
+public class PlaneRepository extends ObservableRepository{
     private static PlaneRepository instance;
     private ArrayList<Plane> planes;
 
@@ -34,7 +34,8 @@ public class PlaneRepository {
                 return false;
             }
         }
-        planes.add(plane);
+        this.planes.add(plane);
+        notifyObservers();
         return true;
     }
 

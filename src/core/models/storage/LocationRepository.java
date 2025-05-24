@@ -12,7 +12,7 @@ import java.util.Comparator;
  *
  * @author Sahory Blanco
  */
-public class LocationRepository {
+public class LocationRepository extends ObservableRepository{
     private static LocationRepository instance;
     private ArrayList<Location> locations;
 
@@ -34,6 +34,7 @@ public class LocationRepository {
             }
         }
         locations.add(location);
+        notifyObservers();
         return true;
     }
 

@@ -234,6 +234,8 @@ public class FlightController {
 
             flight.addPassenger(passenger);
             passenger.addFlight(flight);
+            passengerRepo.notifyObservers();
+            flightRepo.notifyObservers();
 
             return new Response("Passenger " + passengerId + " added to flight " + flightId + " successfully.", Status.OK, flight.clone());
 

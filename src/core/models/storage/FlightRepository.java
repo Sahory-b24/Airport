@@ -13,7 +13,7 @@ import java.util.Comparator;
  *
  * @author Sahory Blanco
  */
-public class FlightRepository {
+public class FlightRepository extends ObservableRepository{
     private static FlightRepository instance;
     private ArrayList<Flight> flights;
 
@@ -35,6 +35,7 @@ public class FlightRepository {
             }
         }
         flights.add(flight);
+        notifyObservers();
         return true;
     }
 

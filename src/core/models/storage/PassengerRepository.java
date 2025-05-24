@@ -13,7 +13,7 @@ import java.util.Comparator;
  *
  * @author Sahory Blanco
  */
-public class PassengerRepository {
+public class PassengerRepository extends ObservableRepository{
     private static PassengerRepository instance;
 
     private ArrayList<Passenger> passengers;
@@ -36,6 +36,7 @@ public class PassengerRepository {
             }
         }
         this.passengers.add(p);
+        notifyObservers();
         return true;
     }
 
@@ -52,6 +53,7 @@ public class PassengerRepository {
         for (Passenger p : passengers) {
             if (p.getId() == id) {
                 passengers.remove(p);
+                notifyObservers();
                 return true;
             }
         }
@@ -59,6 +61,7 @@ public class PassengerRepository {
     }
 
     public void clear() {
+        notifyObservers();
         passengers.clear();
     }
 
