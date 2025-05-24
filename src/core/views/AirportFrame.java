@@ -1633,6 +1633,24 @@ public class AirportFrame extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, response.getMessage(), "Success", JOptionPane.INFORMATION_MESSAGE);
             // Agregar ID al combo de asignación de vuelos
             comboBoxFlightAdd.addItem(id);
+            
+            txtIDFlightRegistration.setText("");
+            txtYearFlightRegistration.setText("");
+
+            comboBoxPlaneFlightRegistration.setSelectedIndex(0);
+            comboBoxDepartureLocationFlightRegistration.setSelectedIndex(0);
+            comboBoxArrivalLocationFlightRegistration.setSelectedIndex(0);
+            comboBoxScaleLocationFlightRegistration.setSelectedIndex(0);
+
+            comboBoxMonthFlightRegistration.setSelectedIndex(0);
+            comboBoxDayFlightRegistration.setSelectedIndex(0);
+            comboBoxHourDepartureDateFlightRegistration.setSelectedIndex(0);
+            comboBoxMinuteDepartureDateFlightRegistration.setSelectedIndex(0);
+
+            comboBoxHourArrivalLocationFlightRegistration.setSelectedIndex(0);
+            comboBoxMinuteArrivalFlightRegistration.setSelectedIndex(0);
+            comboBoxHourScaleLocationFlightRegistration.setSelectedIndex(0);
+            comboBoxMinuteScaleLocationFlightRegistration.setSelectedIndex(0);
         }
         ShowJsonComboBox.loadFlights(comboBoxIDDelayFlight);
 

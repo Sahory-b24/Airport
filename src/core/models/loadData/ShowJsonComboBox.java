@@ -35,7 +35,7 @@ public class ShowJsonComboBox {
         DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>();
         model.addElement("Select a location");
 
-        for (Location loc : LocationRepository.getInstance().getAllLocations()) {
+        for (Location loc : LocationRepository.getInstance().getAllLocationsSorted()) {
             
             model.addElement(loc.getAirportId());
         }
