@@ -1665,19 +1665,23 @@ public class AirportFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAddActionPerformed
 
     private void btnDelayDelayFlightActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDelayDelayFlightActionPerformed
-        // TODO add your handling code here:
-        String flightId = comboBoxIDDelayFlight.getItemAt(comboBoxIDDelayFlight.getSelectedIndex());
-        int hours = Integer.parseInt(comboBoxHourDeayFlight.getItemAt(comboBoxHourDeayFlight.getSelectedIndex()));
-        int minutes = Integer.parseInt(comboBoxMinuteDelayFlight.getItemAt(comboBoxMinuteDelayFlight.getSelectedIndex()));
-
-        Flight flight = null;
-        for (Flight f : this.flights) {
-            if (flightId.equals(f.getId())) {
-                flight = f;
+        String selectedFlightId = "";
+        selectedFlightId = comboBoxIDDelayFlight.getSelectedItem().toString();
+        String delayHoursStr = comboBoxHourDeayFlight.getSelectedItem().toString();
+        String delayMinutesStr = comboBoxMinuteDelayFlight.getSelectedItem().toString();
+        if (delayHoursStr.equalsIgnoreCase("Hour")) delayHoursStr = "0";
+        if (delayMinutesStr.equalsIgnoreCase("Minute")) delayMinutesStr = "0";
+        Response controllerResponse = FlightController.delayFlight(selectedFlightId, delayHoursStr, delayMinutesStr);
+        if (controllerResponse.getStatus() >= 400) {
+        JOptionPane.showMessageDialog(this, controllerResponse.getMessage(), "Operation Failed - Status: " + controllerResponse.getStatus(), JOptionPane.ERROR_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(this, controllerResponse.getMessage(), "Operation Successful - Status: " + controllerResponse.getStatus(), JOptionPane.INFORMATION_MESSAGE);
+            if (controllerResponse.getStatus() < 300) {
+            comboBoxIDDelayFlight.setSelectedIndex(0);
+            comboBoxHourDeayFlight.setSelectedIndex(0);
+            comboBoxMinuteDelayFlight.setSelectedIndex(0);
             }
         }
-
-        //flight.delay(hours, minutes);
     }//GEN-LAST:event_btnDelayDelayFlightActionPerformed
 
     private void btnRefreshShowMyFlightsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRefreshShowMyFlightsActionPerformed

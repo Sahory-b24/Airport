@@ -49,21 +49,16 @@ public class FlightController {
         String minutesDurationScale
     ) {
         try {
-            // Validación básica de ID
             if (id == null || !FLIGHT_ID_PATTERN.matcher(id).matches()) {
                 return new Response("Invalid flight ID. Must be 3 uppercase letters followed by 3 digits (e.g. ABC123).", Status.BAD_REQUEST);
             }
-
             if (planeId == null || planeId.trim().isEmpty() ||
                 departureLocationId == null || departureLocationId.trim().isEmpty() ||
                 arrivalLocationId == null || arrivalLocationId.trim().isEmpty() ||
                 departureDateStr == null || departureDateStr.trim().isEmpty()) {
                 return new Response("Plane, locations and departure date are required.", Status.BAD_REQUEST);
             }
-
             boolean hasScale = scaleLocationId != null && !scaleLocationId.trim().isEmpty();
-
-            // Parsear duración
             int hArr, mArr, hScale, mScale;
             try {
                 hArr = Integer.parseInt(hoursDurationArrival);
@@ -84,8 +79,6 @@ public class FlightController {
             if (!hasScale && (hScale > 0 || mScale > 0)) {
                 return new Response("Scale time must be 0 if there is no scale location.", Status.BAD_REQUEST);
             }
-
-            // Parsear fecha
             LocalDateTime departureDate;
             try {
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-M-d'T'H:m");
@@ -110,30 +103,24 @@ public class FlightController {
             } catch (NumberFormatException e) {
                 return new Response("La duración de llegada debe ser numérica.", Status.BAD_REQUEST);
             }
-            // Obtener instancias
             FlightRepository flightRepo = FlightRepository.getInstance();
             PlaneRepository planeRepo = PlaneRepository.getInstance();
             LocationRepository locationRepo = LocationRepository.getInstance();
-
             if (flightRepo.getFlight(id) != null) {
                 return new Response("Flight with ID " + id + " already exists.", Status.BAD_REQUEST);
             }
-
             Plane plane = planeRepo.getPlane(planeId);
             if (plane == null) {
                 return new Response("Plane not found.", Status.NOT_FOUND);
             }
-
             Location departureLoc = locationRepo.getLocation(departureLocationId);
             Location arrivalLoc = locationRepo.getLocation(arrivalLocationId);
             if (departureLoc == null || arrivalLoc == null) {
                 return new Response("Departure or arrival location not found.", Status.NOT_FOUND);
             }
-
             if (departureLoc.equals(arrivalLoc)) {
                 return new Response("Departure and arrival locations must be different.", Status.BAD_REQUEST);
             }
-
             Location scaleLoc = null;
             if (hasScale) {
                 scaleLoc = locationRepo.getLocation(scaleLocationId);
@@ -167,31 +154,48 @@ public class FlightController {
     }
 
     
-    public static Response delayFlight(String flightId, int hours, int minutes) {
-        
+    public static Response delayFlight(String flightId, String hoursStr, String minutesStr) {
         if (flightId == null || flightId.trim().isEmpty()) {
-            return new Response("Flight ID is required to delay it.", Status.BAD_REQUEST);
+            return new Response("Flight ID is required to delay the flight.", Status.BAD_REQUEST);
         }
-        if (hours <= 0 && minutes <= 0) { 
-            return new Response("The delay time (hours or minutes) must be greater than 00:00.", Status.BAD_REQUEST);
+        int hours;
+        int minutes;
+           
+        try {
+       
+            hours =  Integer.parseInt(hoursStr.trim());
+            minutes = Integer.parseInt(minutesStr.trim());
+        } catch (NumberFormatException e) {
+            return new Response("Delay hours and minutes must be numeric values.", Status.BAD_REQUEST);
         }
-        if (hours < 0 || minutes < 0) { 
+
+        if (hours < 0 || minutes < 0) {
             return new Response("Delay hours and minutes cannot be negative.", Status.BAD_REQUEST);
         }
-
-        FlightRepository flightRepo = FlightRepository.getInstance();
-        Flight flight = flightRepo.getFlight(flightId);
-
-        if (flight == null) {
-            return new Response("Flight with ID " + flightId + " not found.", Status.NOT_FOUND);
+        if (hours == 0 && minutes == 0) {
+            return new Response("Total delay time (hours and minutes combined) must be greater than 00:00.", Status.BAD_REQUEST);
         }
 
-        boolean success = delayStrategy.applyDelay(flight, hours, minutes);
+        try {
+            FlightRepository flightRepo = FlightRepository.getInstance();
+            Flight flight = flightRepo.getFlight(flightId);
+            if (flight == null) { 
+                return new Response("Flight with ID '" + flightId + "' not found.", Status.NOT_FOUND);
+            }
+            boolean success = delayStrategy.applyDelay(flight, hours, minutes);
+            if (success) {
+                return new Response(
+                "Flight " + flightId + " delayed successfully. New departure: " + flight.getDepartureDate(),
+                Status.OK,
+                flight.clone() 
+            );
+            } else {
+                return new Response("Could not apply delay to flight " + flightId + ".", Status.BAD_REQUEST);
+            }
 
-        if (success) {
-            return new Response("Flight " + flightId + " delayed successfully.", Status.OK, flight.clone()); //
-        } else {
-            return new Response("Could not apply delay to flight " + flightId + ".", Status.BAD_REQUEST);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new Response("An unexpected error occurred while delaying the flight: " + e.getMessage(), Status.INTERNAL_SERVER_ERROR);
         }
     }
     public static Response addPassengerToFlight(String passengerIdStr, String flightId) {
@@ -251,9 +255,6 @@ public class FlightController {
         return new Response("Flights retrieved successfully.", Status.OK, flightClones);
     }
     public static LocalDateTime getCalculatedArrivalDateForFlight(Flight flight) {
-        if (flight == null) {
-            return null;
-        }
         return arrivalCalculator.calculate(flight);
     }
 }
