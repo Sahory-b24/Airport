@@ -88,7 +88,7 @@ public class AirportFrame extends javax.swing.JFrame {
         });
         FlightRepository.getInstance().addObserver(observerShowMyFlight);
     }
-
+    
     private void blockPanels() {
         //9, 11
         for (int i = 1; i < jTabbedPane1.getTabCount(); i++) {
@@ -146,7 +146,7 @@ public class AirportFrame extends javax.swing.JFrame {
         buttonGroup1 = new javax.swing.ButtonGroup();
         panelRound1 = new core.views.PanelRound();
         panelRound2 = new core.views.PanelRound();
-        jButton13 = new javax.swing.JButton();
+        btnSalir = new javax.swing.JButton();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel1 = new javax.swing.JPanel();
         user = new javax.swing.JRadioButton();
@@ -301,14 +301,14 @@ public class AirportFrame extends javax.swing.JFrame {
             }
         });
 
-        jButton13.setFont(new java.awt.Font("Yu Gothic UI", 0, 18)); // NOI18N
-        jButton13.setText("X");
-        jButton13.setBorderPainted(false);
-        jButton13.setContentAreaFilled(false);
-        jButton13.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jButton13.addActionListener(new java.awt.event.ActionListener() {
+        btnSalir.setFont(new java.awt.Font("Yu Gothic UI", 0, 18)); // NOI18N
+        btnSalir.setText("X");
+        btnSalir.setBorderPainted(false);
+        btnSalir.setContentAreaFilled(false);
+        btnSalir.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnSalir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton13ActionPerformed(evt);
+                btnSalirActionPerformed(evt);
             }
         });
 
@@ -318,13 +318,13 @@ public class AirportFrame extends javax.swing.JFrame {
             panelRound2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelRound2Layout.createSequentialGroup()
                 .addContainerGap(1083, Short.MAX_VALUE)
-                .addComponent(jButton13, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(17, 17, 17))
         );
         panelRound2Layout.setVerticalGroup(
             panelRound2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelRound2Layout.createSequentialGroup()
-                .addComponent(jButton13)
+                .addComponent(btnSalir)
                 .addGap(0, 12, Short.MAX_VALUE))
         );
 
@@ -1819,9 +1819,9 @@ public class AirportFrame extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnRefreshShowAllLocationActionPerformed
 
-    private void jButton13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton13ActionPerformed
+    private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
         System.exit(0);
-    }//GEN-LAST:event_jButton13ActionPerformed
+    }//GEN-LAST:event_btnSalirActionPerformed
 
     private void userSelectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_userSelectActionPerformed
         try {
@@ -1873,6 +1873,7 @@ public class AirportFrame extends javax.swing.JFrame {
     private javax.swing.JButton btnRefreshShowAllPlanes;
     private javax.swing.JButton btnRefreshShowMyFlights;
     private javax.swing.JButton btnRegister;
+    private javax.swing.JButton btnSalir;
     private javax.swing.JButton btnUpdate;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JComboBox<String> comboBoxArrivalLocationFlightRegistration;
@@ -1895,7 +1896,6 @@ public class AirportFrame extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> comboBoxMonthUpdate;
     private javax.swing.JComboBox<String> comboBoxPlaneFlightRegistration;
     private javax.swing.JComboBox<String> comboBoxScaleLocationFlightRegistration;
-    private javax.swing.JButton jButton13;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
