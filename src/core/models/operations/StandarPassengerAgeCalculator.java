@@ -14,6 +14,7 @@ import java.time.Period;
  * @author ujhuh
  */
 public class StandarPassengerAgeCalculator implements PassengerAgeCalculator {
+    // Metodo que implementa una interfaz con el fin de Calcular la edad de un passenger
     @Override
     public int calculateAge(Passenger passenger) {
         if (passenger == null || passenger.getBirthDate() == null) {

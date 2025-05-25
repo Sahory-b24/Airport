@@ -17,22 +17,23 @@ public class LocationController {
     public static Response createLocation(String id, String name, String city, String country, String latitude, String longitude) {
         double lat, lon;
         // Validaciones
+        // Valida que el ID tenga solo letras mayusculas
         if (id == null || !id.matches("[A-Z]{3}")) {
             return new Response("ID must be 3 uppercase letters", Status.BAD_REQUEST);
         }
-
+        // Valida que el nombre no este vacio
         if (name == null || name.trim().isEmpty()) {
             return new Response("Name cannot be empty", Status.BAD_REQUEST);
         }
-
+        //Valica que la ciudad no puede estar vacia
         if (city == null || city.trim().isEmpty()) {
             return new Response("City cannot be empty", Status.BAD_REQUEST);
         }
-
+        //Valida que el pais no puede estar vacio
         if (country == null || country.trim().isEmpty()) {
             return new Response("Country cannot be empty", Status.BAD_REQUEST);
         }
-
+        //Valida las latitudes
         try {
             lat = Double.parseDouble(latitude);
             if (lat < -90 || lat > 90) {
@@ -53,10 +54,11 @@ public class LocationController {
         }
 
         LocationRepository repo = LocationRepository.getInstance();
-
+        //Valida que no hallan dos locaciones con el mismo ID
         if (repo.getLocation(id) != null) {
             return new Response("Location with this ID already exists", Status.BAD_REQUEST);
         }
+        //Indica que la operacion se hizo exitosamente
         Location l = new Location(id, name, city, country, lat, lon);
         repo.addLocation(l);
         return new Response("Location created successfully", Status.CREATED);

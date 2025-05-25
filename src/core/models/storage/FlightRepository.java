@@ -13,14 +13,15 @@ import java.util.Comparator;
  *
  * @author Sahory Blanco
  */
+// Clase que se encarga de gestionar el Storage de flights
 public class FlightRepository extends ObservableRepository{
     private static FlightRepository instance;
     private ArrayList<Flight> flights;
-
+    //Arraylist donde se guardan los vuelos
     private FlightRepository() {
         this.flights = new ArrayList<>();
     }
-
+    
     public static FlightRepository getInstance() {
         if (instance == null) {
             instance = new FlightRepository();

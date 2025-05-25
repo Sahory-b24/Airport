@@ -16,6 +16,7 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author Sahory Blanco
  */
+// Muestra la informacion y actualiza la tabla de passengers
 public class PassengerTableController {
     public static Response updatePassengersTable(DefaultTableModel model) {
         try {

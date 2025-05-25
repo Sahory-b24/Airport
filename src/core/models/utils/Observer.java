@@ -9,5 +9,6 @@ package core.models.utils;
  * @author Sahory Blanco
  */
 public interface Observer {
+     //Interfaz que contiene del metodo update
     void update();
 }

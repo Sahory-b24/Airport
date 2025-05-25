@@ -12,5 +12,6 @@ import java.time.LocalDateTime;
  * @author ujhuh
  */
 public interface FlightArrivalCalculator {
+     //Interfaz que contiene el metodo calculate
      LocalDateTime calculate(Flight flight);
 }

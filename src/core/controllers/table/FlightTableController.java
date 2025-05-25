@@ -21,6 +21,7 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author Sahory Blanco
  */
+//Metodo que controla la tabla de vuelos y lo que se muestra en ella
 public class FlightTableController {
     public static Response updateFlightsTable(DefaultTableModel model) {
         try {
@@ -51,8 +52,9 @@ public class FlightTableController {
             return new Response("Unexpected error: " + e.getMessage(), Status.INTERNAL_SERVER_ERROR);
         }
     }
-    
+    //Metodo que actualiza la tabla 
     public static Response updateMyFlightsTable(String selected, DefaultTableModel model) {
+        //Se encarga de hacer las respectivas validaciones y luego actualiza la tabla
         try {
             if (selected == null || selected.startsWith("Select")) {
                 return new Response("Please select a passenger.", Status.BAD_REQUEST);

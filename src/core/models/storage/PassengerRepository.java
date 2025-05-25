@@ -13,6 +13,7 @@ import java.util.Comparator;
  *
  * @author Sahory Blanco
  */
+// Clase que se encarga de gestionar el Storage de passenger
 public class PassengerRepository extends ObservableRepository{
     private static PassengerRepository instance;
 

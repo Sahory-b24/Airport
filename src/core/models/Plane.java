@@ -60,6 +60,7 @@ public class Plane implements Add{
     public int getNumFlights() {
         return flights.size();
     }
+    // Patron Prototype  que clona un plane
     @Override
     public Plane clone() {
         Plane copy = new Plane(

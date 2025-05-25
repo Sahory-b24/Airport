@@ -11,6 +11,7 @@ import core.models.Flight;
  * @author ujhuh
  */
 public interface FlightDelay {
+     //Interfaz que contiene el metodo ApplyDelay
      boolean applyDelay(Flight flight, int hours, int minutes);
 }
 

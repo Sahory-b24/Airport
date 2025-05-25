@@ -11,5 +11,6 @@ import core.models.Passenger;
  * @author ujhuh
  */
 public interface PhoneNumberFormatter {
+     //Interfaz que contiene el metodo formatPhoneNumber
     String formatPhoneNumber(Passenger passenger);
 }

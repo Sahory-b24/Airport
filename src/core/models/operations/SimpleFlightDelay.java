@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
  * @author ujhuh
  */
 public class SimpleFlightDelay  implements FlightDelay {
-
+    // Metodo que implementa una interfaz con el fin de aplicar un delay a un vuelo
     @Override
     public boolean applyDelay(Flight flight, int hours, int minutes) {
          if (flight == null || (hours == 0 && minutes == 0)) { 

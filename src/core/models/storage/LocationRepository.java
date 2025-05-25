@@ -12,6 +12,7 @@ import java.util.Comparator;
  *
  * @author Sahory Blanco
  */
+// Clase que se encarga de gestionar el Storage de Location
 public class LocationRepository extends ObservableRepository{
     private static LocationRepository instance;
     private ArrayList<Location> locations;

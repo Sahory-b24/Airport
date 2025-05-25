@@ -20,6 +20,8 @@ import javax.swing.JComboBox;
  * @author Sahory Blanco
  */
 public class ShowJsonComboBox {
+    // Clase que muestra la ifnormacion necesaria en los combo box
+    // Passengers
     public static void loadPassengers(JComboBox<String> comboBox) {
         DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>();
         model.addElement("Select a user");
@@ -31,6 +33,7 @@ public class ShowJsonComboBox {
 
         comboBox.setModel(model);
     }
+    //Locations
     public static void loadLocations(JComboBox<String> comboBox) {
         DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>();
         model.addElement("Select a location");
@@ -42,6 +45,7 @@ public class ShowJsonComboBox {
 
         comboBox.setModel(model);
     }
+    //Planes
     public static void loadPlanes(JComboBox<String> comboBox) {
         DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>();
         model.addElement("Select a plane");
@@ -53,6 +57,7 @@ public class ShowJsonComboBox {
 
         comboBox.setModel(model);
     }
+    //Flights
     public static void loadFlights(JComboBox<String> comboBox) {
         DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>();
         model.addElement("Select a flight");

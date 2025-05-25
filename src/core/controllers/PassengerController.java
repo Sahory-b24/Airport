@@ -1,4 +1,4 @@
-/*
+ /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
@@ -21,6 +21,7 @@ import java.time.format.DateTimeParseException;
  * @author Sahory Blanco
  */
 public class PassengerController {
+    //Conecta con las interfaces
       private static final PassengerAgeCalculator ageCalculator = new StandarPassengerAgeCalculator();
       private static final PhoneNumberFormatter phoneFormatter = new DefaultPhoneNumberFormatter();
     public static Response createPassenger(String id,String firstname,String lastname,String birthDate,String countryPhoneCode,String phone,String country) {
@@ -33,8 +34,8 @@ public class PassengerController {
             
             
         try{
-            // ID
-            
+            // Validaciones con respecto al ID
+            // ID no puede estar vacio
             if (id == null || id.isEmpty()) {
                 return new Response("ID cannot be empty", Status.BAD_REQUEST);
             }

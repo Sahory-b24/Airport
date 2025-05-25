@@ -15,6 +15,7 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author Sahory Blanco
  */
+// Muestra la informacion y actualiza la tabla de Planes
 public class PlaneTableController {
     public static Response updatePlanesTable(DefaultTableModel model) {
     try {

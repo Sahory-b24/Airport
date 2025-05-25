@@ -15,9 +15,14 @@ import javax.swing.UIManager;
  */
 public class Main {
     public static void main(String args[]) {
-          // Cargar todos los datos de los JSON
+    // Cargar todos los datos de los JSON
+    
+    
+    
     LoadDataJson dataLoader = new LoadDataJson();
     dataLoader.loadAllData();
+    
+    
     //mostrar interfaz
         System.setProperty("flatlaf.useNativeLibrary", "false");
 

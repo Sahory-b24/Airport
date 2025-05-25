@@ -49,6 +49,7 @@ public class Location {
     public double getAirportLongitude() {
         return airportLongitude;
     }
+    // Patron Prototype  que clona un Location
     @Override
     public Location clone() {
         return new Location(

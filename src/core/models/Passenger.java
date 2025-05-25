@@ -102,7 +102,7 @@ public class Passenger implements Add{
     public int getNumFlights() {
         return flights.size();
     }
-    
+    // Patron Prototype  que clona un passenger
     public Passenger clone() {
         Passenger copy = new Passenger(
             this.id,

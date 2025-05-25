@@ -15,6 +15,7 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author Sahory Blanco
  */
+// Muestra la informacion y actualiza la tabla de locations
 public class LocationTableController {
     public static Response updateLocationsTable(DefaultTableModel model) {
         try {

@@ -107,6 +107,7 @@ public class Flight {
     public int getNumPassengers() {
         return passengers.size();
     }
+    // Patron Prototype  que clona un flight
     @Override
     public Flight clone() {
         Flight copy;

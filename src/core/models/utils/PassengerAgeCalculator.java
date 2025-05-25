@@ -11,5 +11,6 @@ import core.models.Passenger;
  * @author ujhuh
  */
 public interface PassengerAgeCalculator {
+     //Interfaz que contiene el metodo Calculate
      int calculateAge(Passenger passenger);
 }

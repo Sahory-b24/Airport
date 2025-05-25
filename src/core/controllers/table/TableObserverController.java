@@ -10,6 +10,7 @@ import core.models.utils.Observer;
  *
  * @author Sahory Blanco
  */
+// Observadores encargados de actualizar las tablas
 public class TableObserverController implements Observer {
     private Runnable updateFunction;
 

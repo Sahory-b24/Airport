@@ -13,6 +13,7 @@ import java.util.List;
  *
  * @author Sahory Blanco
  */
+// Clase que se encarga de gestionar el Storage de plane
 public class PlaneRepository extends ObservableRepository{
     private static PlaneRepository instance;
     private ArrayList<Plane> planes;

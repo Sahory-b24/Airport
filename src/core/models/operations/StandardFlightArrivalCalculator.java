@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
  * @author ujhuh
  */
 public class StandardFlightArrivalCalculator implements FlightArrivalCalculator{
-
+    // Metodo que implementa una interfaz con el fin de calcular la fecha de llegaa de un vuelo
     @Override
     public LocalDateTime calculate(Flight flight) {
         

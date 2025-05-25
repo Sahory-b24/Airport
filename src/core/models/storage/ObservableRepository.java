@@ -12,6 +12,7 @@ import java.util.List;
  *
  * @author Sahory Blanco
  */
+// Clase que se encarga de gestionar el storage de los observer
 public abstract class ObservableRepository {
     private final List<Observer> observers = new ArrayList<>();
 

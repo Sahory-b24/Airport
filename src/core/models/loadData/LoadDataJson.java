@@ -27,14 +27,14 @@ import org.json.JSONTokener;
  * @author Sahory Blanco
  */
 public class LoadDataJson {
- 
+ // clase que carga la informacion de los json, crea los onjetos y los guarda en los repositorios
     public void loadAllData() {
         loadLocations("json/locations.json"); 
         loadPlanes("json/planes.json");       
         loadPassengers("json/passengers.json"); 
         loadFlights("json/flights.json");     
     }
-
+    // locations
     public void loadLocations(String filename) {
         LocationRepository locationRepo = LocationRepository.getInstance();
         try (FileReader reader = new FileReader(filename)) {
@@ -59,7 +59,7 @@ public class LoadDataJson {
             System.err.println("Error parsing locations JSON (" + filename + "): " + e.getMessage());
         }
     }
-
+    //Planes
     public void loadPlanes(String filename) {
         PlaneRepository planeRepo = PlaneRepository.getInstance();
         try (FileReader reader = new FileReader(filename)) {
@@ -87,7 +87,7 @@ public class LoadDataJson {
             System.err.println("Error parsing planes JSON (" + filename + "): " + e.getMessage());
         }
     }
-
+    // Passengers
     public void loadPassengers(String filename) {
         PassengerRepository passengerRepo = PassengerRepository.getInstance();
         try (FileReader reader = new FileReader(filename)) {
@@ -115,7 +115,7 @@ public class LoadDataJson {
             System.err.println("Error parsing passengers JSON (" + filename + "): " + e.getMessage());
         }
     }
-
+    //Flights
     public void loadFlights(String filename) {
       FlightRepository flightRepo = FlightRepository.getInstance();
     PlaneRepository planeRepo = PlaneRepository.getInstance();
