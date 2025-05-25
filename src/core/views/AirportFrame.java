@@ -146,7 +146,7 @@ public class AirportFrame extends javax.swing.JFrame {
         buttonGroup1 = new javax.swing.ButtonGroup();
         panelRound1 = new core.views.PanelRound();
         panelRound2 = new core.views.PanelRound();
-        btnSalir = new javax.swing.JButton();
+        btnExit = new javax.swing.JButton();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel1 = new javax.swing.JPanel();
         user = new javax.swing.JRadioButton();
@@ -301,14 +301,14 @@ public class AirportFrame extends javax.swing.JFrame {
             }
         });
 
-        btnSalir.setFont(new java.awt.Font("Yu Gothic UI", 0, 18)); // NOI18N
-        btnSalir.setText("X");
-        btnSalir.setBorderPainted(false);
-        btnSalir.setContentAreaFilled(false);
-        btnSalir.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnSalir.addActionListener(new java.awt.event.ActionListener() {
+        btnExit.setFont(new java.awt.Font("Yu Gothic UI", 0, 18)); // NOI18N
+        btnExit.setText("X");
+        btnExit.setBorderPainted(false);
+        btnExit.setContentAreaFilled(false);
+        btnExit.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnExit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSalirActionPerformed(evt);
+                btnExitActionPerformed(evt);
             }
         });
 
@@ -318,13 +318,13 @@ public class AirportFrame extends javax.swing.JFrame {
             panelRound2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelRound2Layout.createSequentialGroup()
                 .addContainerGap(1083, Short.MAX_VALUE)
-                .addComponent(btnSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnExit, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(17, 17, 17))
         );
         panelRound2Layout.setVerticalGroup(
             panelRound2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelRound2Layout.createSequentialGroup()
-                .addComponent(btnSalir)
+                .addComponent(btnExit)
                 .addGap(0, 12, Short.MAX_VALUE))
         );
 
@@ -1819,9 +1819,9 @@ public class AirportFrame extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnRefreshShowAllLocationActionPerformed
 
-    private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
+    private void btnExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExitActionPerformed
         System.exit(0);
-    }//GEN-LAST:event_btnSalirActionPerformed
+    }//GEN-LAST:event_btnExitActionPerformed
 
     private void userSelectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_userSelectActionPerformed
         try {
@@ -1867,13 +1867,13 @@ public class AirportFrame extends javax.swing.JFrame {
     private javax.swing.JButton btnCreateFlightRegistration;
     private javax.swing.JButton btnCreateLocationRegistration;
     private javax.swing.JButton btnDelayDelayFlight;
+    private javax.swing.JButton btnExit;
     private javax.swing.JButton btnRefreshShowAllFlights;
     private javax.swing.JButton btnRefreshShowAllLocation;
     private javax.swing.JButton btnRefreshShowAllPassengers;
     private javax.swing.JButton btnRefreshShowAllPlanes;
     private javax.swing.JButton btnRefreshShowMyFlights;
     private javax.swing.JButton btnRegister;
-    private javax.swing.JButton btnSalir;
     private javax.swing.JButton btnUpdate;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JComboBox<String> comboBoxArrivalLocationFlightRegistration;

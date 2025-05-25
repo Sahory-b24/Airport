@@ -174,16 +174,7 @@ public class LoadDataJson {
 
         
             if (plane != null) { 
-               
-                System.out.println("LOAD_FLIGHTS_DEBUG: Vuelo ID: " + flight.getId() + 
-                                   " añadiéndose al Avión ID: " + plane.getId() +
-                                   ". Vuelos ANTES en avión: " + plane.getNumFlights());
-                
                 plane.addFlight(flight);
-                
-                System.out.println("LOAD_FLIGHTS_DEBUG: Vuelo ID: " + flight.getId() + 
-                                   " añadido al Avión ID: " + plane.getId() +
-                                   ". Vuelos DESPUÉS en avión: " + plane.getNumFlights());
             }
            
             
